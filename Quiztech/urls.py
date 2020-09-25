@@ -28,4 +28,5 @@ urlpatterns = [
     path('blog/',blog),
     path('about/',about),
     path('login2/',login2),
+    path('OrgSave/',OrgSave),
 ]

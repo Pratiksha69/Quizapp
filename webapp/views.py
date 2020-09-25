@@ -8,7 +8,7 @@ def index(request):
 def register(request):
 	return render(request, 'register.html',{})
 	def saveData(request):s
-	s=register(Fullname="Pratiksha Tyagi",Email="tpratiksha692@gmail.com",Password="tyagi692@",ConfirmPassword="tyagi692@")
+	s=register(Fullname="Pratiksha Tyagi",Email="tpratiksha692@gmail.com",Password="tyagi",ConfirmPassword="tyagi")
 	s=register(Fullname="Rupali Agarwal",Email="agarwalrupali28@gmail.com",Password="agrawal1234",ConfirmPassword="agrawal1234")
 	s.save()
 	msg="record saved now"

@@ -19,3 +19,5 @@ def blog(request):
 	return render(request, 'blog.html',{})
 def about(request):
 	return render(request, 'about.html',{})
+def login2(request):
+	return render(request, 'login2.html',{})

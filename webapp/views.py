@@ -11,15 +11,6 @@ def index(request):
 
 def register(request):
 	return render(request, 'register.html',{})
-<<<<<<< HEAD
-	def saveData(request):s
-	s=register(Fullname="Pratiksha Tyagi",Email="tpratiksha692@gmail.com",Password="tyagi",ConfirmPassword="tyagi")
-	s=register(Fullname="Rupali Agarwal",Email="agarwalrupali28@gmail.com",Password="agrawal1234",ConfirmPassword="agrawal1234")
-	s.save()
-	msg="record saved now"
-	return HttpResponse(msg)
-=======
->>>>>>> 7c853443af34445024d4defd5bada04b5965f0ea
 @csrf_exempt
 def OrgSave(request):
 	if request.method=='POST':
@@ -70,8 +61,8 @@ def login2(request):
 	return render(request, 'login2.html',{})
 
 def sendmail():
-	sub='Test QuizAPP'
-	msg='''Test Success
+	sub='Test QuizAPP otp'
+	msg=''' OTP Success
 Thanks'''
 	email=EmailMessage(sub,msg,to=['tpratiksha692@gmail.com'])
 	email.send()

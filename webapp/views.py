@@ -61,8 +61,8 @@ def login2(request):
 	return render(request, 'login2.html',{})
 
 def sendmail():
-	sub='Test QuizAPP'
-	msg='''Test Success
+	sub='Test QuizAPP otp'
+	msg=''' OTP Success
 Thanks'''
 	email=EmailMessage(sub,msg,to=['tpratiksha692@gmail.com'])
 	email.send()

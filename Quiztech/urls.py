@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from webapp.views import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/',index),
@@ -27,6 +28,12 @@ urlpatterns = [
     path('blog_details/',blog_details),
     path('blog/',blog),
     path('about/',about),
+<<<<<<< HEAD
+    path('verified/',verified),
+    path('customer/',customer),
+    
+=======
     path('login2/',login2),
     path('OrgSave/',OrgSave),
+>>>>>>> 8ebfcadf263ce7bba3020ede9751cf29cbc7171b
 ]

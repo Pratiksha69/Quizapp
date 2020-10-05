@@ -8,7 +8,8 @@ import datetime
 # Create your views here.
 def index(request):
 	return render(request, 'index.html',{})
-
+def verified(request):
+	return render(request, 'verified.html',{})
 def register(request):
 	return render(request, 'register.html',{})
 @csrf_exempt
@@ -26,7 +27,6 @@ def OrgSave(request):
 			x=x+1 #2
 			cid=c+str(x)
 		x=int(x)
-
 		#Generate OTP
 		otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+cid+f+e+p).int
 		otp=str(otp)
@@ -41,7 +41,7 @@ def OrgSave(request):
 
 		msg="Registered Success! Now Verify Your Email"
 		dic={'msg':msg}#JSON
-		return render(request, 'register.html',dic)
+		return render(request, 'verified.html',dic)
 
 def login(request):
 	return render(request, 'login.html',{})

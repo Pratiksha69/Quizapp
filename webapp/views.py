@@ -67,3 +67,5 @@ Thanks'''
 	email=EmailMessage(sub,msg,to=['tpratiksha692@gmail.com'])
 	email.send()
 
+def hello(request):
+	return render(request,'hello.html',{})

@@ -46,7 +46,7 @@
 
 <main class="login-body" data-vide-bg="/assets/img/login-bg.mp4">
     <!-- Login Admin -->
-    <form class="form-default" action="/OrgSave/" method="POST">
+    <form class="form-default" action="/verifyuser/" method="POST">
         
         <div class="login-form">
             <!-- logo-login -->
@@ -57,7 +57,8 @@
 
             <div class="form-input">
                 <label for="name">Verified OTP</label>
-                <input  type="text" name="Verified OTP" placeholder=" ">
+                <input  type="text" name="otp" placeholder="Enter OTP Here">
+                <input  type="hidden" value="{{ id|safe }}" name="id">
             </div>
             <div class="form-input pt-30">
                 <span>{{ msg|safe }}</span>

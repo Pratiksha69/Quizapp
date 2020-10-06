@@ -72,8 +72,14 @@
                                                 </li>
                                                 <li><a href="contact.html">Contact</a></li>
                                                 <!-- Button -->
+                                                {% if checksession %}
+                                                <li class="button-header margin-left "><a href="#" class="btn">Create Quiz</a></li>
+                                                <li class="button-header"><a href="login.html" class="btn btn3">My Account</a></li>
+                                                {% else %}
                                                 <li class="button-header margin-left "><a href="#" class="btn">Join</a></li>
                                                 <li class="button-header"><a href="login.html" class="btn btn3">Log in</a></li>
+                                                {% endif %}
+                                                
                                             </ul>
                                         </nav>
                                     </div>

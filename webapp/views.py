@@ -5,9 +5,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import EmailMessage
 import uuid
 import datetime
+from webapp.myutil import *
 # Create your views here.
 def index(request):
-	return render(request, 'index.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'index.html',dic)
 def verified(request):
 	return render(request, 'verified.html',{})
 def register(request):
@@ -59,7 +61,7 @@ def verify_user(request):
 		sotp=request.session['OTP']
 		if uotp==sotp:
 			OrganizerData.objects.filter(Org_ID=orgid).update(Status='Active')
-			return render(request,'index.html',{})
+			return redirect('/index/')
 		else:
 			dic={'id':cid,'msg':'Incorrect OTP'}
 			return render(request, 'verified.html',dic)

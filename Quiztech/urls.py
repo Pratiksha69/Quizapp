@@ -35,6 +35,6 @@ urlpatterns = [
     path('login2/',login2),
     path('OrgSave/',OrgSave),
     path('hello/',hello),
-    path('verify_user/',verify_user),
+    path('verifyuser/',verify_user),
     path('checklogin/',checklogin),
 ]

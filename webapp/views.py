@@ -11,16 +11,19 @@ def index(request):
 	dic={'checksession':checksession(request)}
 	return render(request, 'index.html',dic)
 def verified(request):
-	return render(request, 'verified.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'verified.html',dic)
 def register(request):
-	return render(request, 'register.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'register.html',dic)
 @csrf_exempt
 def OrgSave(request):
+	dic={'checksession':checksession(request)}
 	if request.method=='POST':
 		f=request.POST.get("Fullname")
 		e=request.POST.get("Email")
 		p=request.POST.get("Password")
-		#OrganizerData.objects.all().delete()
+		OrganizerData.objects.all().delete()
 		#to generate the ID
 		c="ORG00"
 		x=1
@@ -55,6 +58,7 @@ Thanks!'''
 			return render(request, 'verified.html',dic)
 @csrf_exempt
 def verify_user(request):
+	dic={'checksession':checksession(request)}
 	if request.method=='POST':
 		uotp=request.POST.get('otp')
 		orgid=request.POST.get('id')
@@ -63,41 +67,56 @@ def verify_user(request):
 			OrganizerData.objects.filter(Org_ID=orgid).update(Status='Active')
 			return redirect('/index/')
 		else:
-			dic={'id':cid,'msg':'Incorrect OTP'}
+			dic={'id':orgid
+			,'msg':'Incorrect OTP'}
 			return render(request, 'verified.html',dic)
 		email=EmailMessage(sub,msg,to=[e])
 		email.send()
 		msg=" verified Email! Now login"
-		dic={'msg':msg,'id':cid}#JSON
+		dic={'msg':msg,'id':orgid}#JSON
 		return render(request, 'login.html',dic)
 @csrf_exempt
 def checklogin(request):
+	dic={'checksession':checksession(request)}
 	if request.method=='POST':
-		Org_Email=request.POST.get('Email')
+		oremail=request.POST.get('Email')
 		orgid=request.POST.get('id')
-		Org_Email=request.session['Email']
-		if OrganizerData.objects.filter(Org_Email=e).exists():
-			request.session['orgid']=OrganizerData.objects.filter(Org_Email=e)[0].Org_ID
-			return render(request,'index.html',{})
+		orsemail=request.session['Email']
+		if oremail==orsemail:
+			OrganizerData.objects.filter(Org_ID=orgid).update(Status='Active')
+			return redirect('/index/')
+			if OrganizerData.objects.filter(Org_Email=e,Org_Password=p).exists():
+				request.session['orgid']=OrganizerData.objects.filter(Org_Email=e,Org_Password=p)[0].Org_ID
+				return redirect("/index/")
+			else:
+				dic={'msg':'Already Exists'}
+				return render(request,'register.html',dic)
 		else:
-			dic={'msg':'Already Exists'}
-			return render(request,'register.html',dic)
+			return render(request,'verified.html',{})
 def login(request):
-	return render(request, 'login.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'login.html',dic)
 def elements(request):
-	return render(request, 'elements.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'elements.html',dic)
 def courses(request):
-	return render(request, 'courses.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'courses.html',dic)
 def contact(request):
-	return render(request, 'contact.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'contact.html',dic)
 def blog_details(request):
-	return render(request, 'blog_details.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'blog_details.html',dic)
 def blog(request):
-	return render(request, 'blog.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'blog.html',dic)
 def about(request):
-	return render(request, 'about.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'about.html',dic)
 def login2(request):
-	return render(request, 'login2.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'login2.html',dic)
 
 def sendmail():
 	sub='Test QuizAPP otp'

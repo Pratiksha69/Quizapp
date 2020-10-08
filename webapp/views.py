@@ -77,22 +77,18 @@ def verify_user(request):
 		return render(request, 'login.html',dic)
 @csrf_exempt
 def checklogin(request):
-	dic={'checksession':checksession(request)}
 	if request.method=='POST':
-		oremail=request.POST.get('Email')
-		orgid=request.POST.get('id')
-		orsemail=request.session['Email']
-		if oremail==orsemail:
-			OrganizerData.objects.filter(Org_ID=orgid).update(Status='Active')
-			return redirect('/index/')
-			if OrganizerData.objects.filter(Org_Email=e,Org_Password=p).exists():
-				request.session['orgid']=OrganizerData.objects.filter(Org_Email=e,Org_Password=p)[0].Org_ID
+		email=request.POST.get('email')
+		password=request.POST.get('password')
+		if OrganizerData.objects.filter(Org_Email=email,Org_Password=password).exists():
+			if OrganizerData.objects.filter(Org_Email=email,Status='Active').exists():
+				request.session['orgid']=OrganizerData.objects.filter(Org_Email=email)[0].Org_ID
 				return redirect("/index/")
 			else:
-				dic={'msg':'Already Exists'}
-				return render(request,'register.html',dic)
+				pass
 		else:
-			return render(request,'verified.html',{})
+			dic={'msg':'Incorrect Email/Password'}
+			return render(request,'login.html',dic)
 def login(request):
 	dic={'checksession':checksession(request)}
 	return render(request, 'login.html',dic)

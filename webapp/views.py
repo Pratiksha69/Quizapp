@@ -85,7 +85,17 @@ def checklogin(request):
 				request.session['orgid']=OrganizerData.objects.filter(Org_Email=email)[0].Org_ID
 				return redirect("/index/")
 			else:
-				pass
+				otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+cid+f+e+p).int
+				otp=str(otp)
+				otp=otp.upper()[0:6]
+				request.session['OTP']=otp#Make Session
+				sub='QuizAPP OTP'
+				msg='''Your OTP is '''+otp+''',
+
+Thanks!'''
+			email=EmailMessage(sub,msg,to=[e])
+			email.send()
+
 		else:
 			dic={'msg':'Incorrect Email/Password'}
 			return render(request,'login.html',dic)

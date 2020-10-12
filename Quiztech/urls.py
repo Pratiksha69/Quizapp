@@ -33,7 +33,13 @@ urlpatterns = [
     path('verified/',verified),
     path('login2/',login2),
     path('OrgSave/',OrgSave),
+
     path('dashbord/',dashbord),
     path('quizregistration/',quizregistration),
+
+
+    path('hello/',hello),
+    path('verifyuser/',verify_user),
+    path('checklogin/',checklogin),
 
 ]

@@ -5,24 +5,33 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import EmailMessage
 import uuid
 import datetime
+from webapp.myutil import *
 # Create your views here.
 def index(request):
-	return render(request, 'index.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'index.html',dic)
 def verified(request):
-	return render(request, 'verified.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'verified.html',dic)
 def register(request):
+<<<<<<< HEAD
 	return render(request, 'register.html',{})
 def dashbord(request):
 	return render(request,'dashbord.html',{})
 def quizregistration(request):
 	return render(request,'quizregistration.html',{})
+=======
+	dic={'checksession':checksession(request)}
+	return render(request, 'register.html',dic)
+>>>>>>> 7f5f45f773ab9dcfe9354e1e7f0a4758bf08e579
 @csrf_exempt
 def OrgSave(request):
+	dic={'checksession':checksession(request)}
 	if request.method=='POST':
 		f=request.POST.get("Fullname")
 		e=request.POST.get("Email")
 		p=request.POST.get("Password")
-		#OrganizerData.objects.all().delete()
+		OrganizerData.objects.all().delete()
 		#to generate the ID
 		c="ORG00"
 		x=1
@@ -57,33 +66,71 @@ Thanks!'''
 			return render(request, 'verified.html',dic)
 @csrf_exempt
 def verify_user(request):
+	dic={'checksession':checksession(request)}
 	if request.method=='POST':
 		uotp=request.POST.get('otp')
 		orgid=request.POST.get('id')
 		sotp=request.session['OTP']
 		if uotp==sotp:
 			OrganizerData.objects.filter(Org_ID=orgid).update(Status='Active')
-			return render(request,'index.html',{})
+			return redirect('/index/')
 		else:
-			dic={'id':cid,'msg':'Incorrect OTP'}
+			dic={'id':orgid
+			,'msg':'Incorrect OTP'}
 			return render(request, 'verified.html',dic)
+		email=EmailMessage(sub,msg,to=[e])
+		email.send()
+		msg=" verified Email! Now login"
+		dic={'msg':msg,'id':orgid}#JSON
+		return render(request, 'login.html',dic)
+@csrf_exempt
+def checklogin(request):
+	if request.method=='POST':
+		email=request.POST.get('email')
+		password=request.POST.get('password')
+		if OrganizerData.objects.filter(Org_Email=email,Org_Password=password).exists():
+			if OrganizerData.objects.filter(Org_Email=email,Status='Active').exists():
+				request.session['orgid']=OrganizerData.objects.filter(Org_Email=email)[0].Org_ID
+				return redirect("/index/")
+			else:
+				otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+cid+f+e+p).int
+				otp=str(otp)
+				otp=otp.upper()[0:6]
+				request.session['OTP']=otp#Make Session
+				sub='QuizAPP OTP'
+				msg='''Your OTP is '''+otp+''',
 
+Thanks!'''
+			email=EmailMessage(sub,msg,to=[e])
+			email.send()
+
+		else:
+			dic={'msg':'Incorrect Email/Password'}
+			return render(request,'login.html',dic)
 def login(request):
-	return render(request, 'login.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'login.html',dic)
 def elements(request):
-	return render(request, 'elements.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'elements.html',dic)
 def courses(request):
-	return render(request, 'courses.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'courses.html',dic)
 def contact(request):
-	return render(request, 'contact.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'contact.html',dic)
 def blog_details(request):
-	return render(request, 'blog_details.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'blog_details.html',dic)
 def blog(request):
-	return render(request, 'blog.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'blog.html',dic)
 def about(request):
-	return render(request, 'about.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'about.html',dic)
 def login2(request):
-	return render(request, 'login2.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request, 'login2.html',dic)
 
 def sendmail():
 	sub='Test QuizAPP otp'

@@ -14,16 +14,11 @@ def verified(request):
 	dic={'checksession':checksession(request)}
 	return render(request, 'verified.html',dic)
 def register(request):
-<<<<<<< HEAD
 	return render(request, 'register.html',{})
 def dashbord(request):
 	return render(request,'dashbord.html',{})
 def quizregistration(request):
 	return render(request,'quizregistration.html',{})
-=======
-	dic={'checksession':checksession(request)}
-	return render(request, 'register.html',dic)
->>>>>>> 7f5f45f773ab9dcfe9354e1e7f0a4758bf08e579
 @csrf_exempt
 def OrgSave(request):
 	if request.method=='POST':
@@ -75,6 +70,18 @@ def verify_user(request):
 		else:
 			dic={'id':orgid,'msg':'Incorrect OTP'}
 			return render(request, 'verified.html',dic)
+def resendotp(request):
+	orgid=request.GET.get('orgid')
+	orgobj=OrganizerData.objects.filter(Org_ID=orgid)[0]
+	otp=request.session['OTP']
+	sub='QuizAPP OTP'
+	msg='''Your OTP is '''+otp+''',
+
+Thanks!'''
+	email=EmailMessage(sub,msg,to=[orgobj.Org_Email])
+	email.send()
+	dic={'id':orgid}
+	return render(request, 'verified.html',dic)
 
 @csrf_exempt
 def checklogin(request):
@@ -86,7 +93,8 @@ def checklogin(request):
 				request.session['orgid']=OrganizerData.objects.filter(Org_Email=email)[0].Org_ID
 				return redirect("/index/")
 			else:
-				otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+cid+f+e+p).int
+				orgobj=OrganizerData.objects.filter(Org_Email=email)[0]
+				otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+orgobj.Org_ID+orgobj.Org_Name+orgobj.Org_Email+orgobj.Org_Password).int
 				otp=str(otp)
 				otp=otp.upper()[0:6]
 				request.session['OTP']=otp#Make Session
@@ -94,9 +102,10 @@ def checklogin(request):
 				msg='''Your OTP is '''+otp+''',
 
 Thanks!'''
-			email=EmailMessage(sub,msg,to=[e])
-			email.send()
-
+				email=EmailMessage(sub,msg,to=[e])
+				email.send()
+				dic={'id':orgobj.Org_ID}
+				return render(request, 'verified.html',dic)
 		else:
 			dic={'msg':'Incorrect Email/Password'}
 			return render(request,'login.html',dic)

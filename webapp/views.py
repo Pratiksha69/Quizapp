@@ -14,8 +14,16 @@ def verified(request):
 	dic={'checksession':checksession(request)}
 	return render(request, 'verified.html',dic)
 def register(request):
+<<<<<<< HEAD
+	return render(request, 'register.html',{})
+def dashbord(request):
+	return render(request,'dashbord.html',{})
+def quizregistration(request):
+	return render(request,'quizregistration.html',{})
+=======
 	dic={'checksession':checksession(request)}
 	return render(request, 'register.html',dic)
+>>>>>>> 7f5f45f773ab9dcfe9354e1e7f0a4758bf08e579
 @csrf_exempt
 def OrgSave(request):
 	dic={'checksession':checksession(request)}

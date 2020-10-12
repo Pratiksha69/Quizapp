@@ -14,16 +14,8 @@ def verified(request):
 	dic={'checksession':checksession(request)}
 	return render(request, 'verified.html',dic)
 def register(request):
-<<<<<<< HEAD
-	return render(request, 'register.html',{})
-def dashbord(request):
-	return render(request,'dashbord.html',{})
-def quizregistration(request):
-	return render(request,'quizregistration.html',{})
-=======
 	dic={'checksession':checksession(request)}
 	return render(request, 'register.html',dic)
->>>>>>> 7f5f45f773ab9dcfe9354e1e7f0a4758bf08e579
 @csrf_exempt
 def OrgSave(request):
 	dic={'checksession':checksession(request)}
@@ -65,7 +57,7 @@ Thanks!'''
 			dic={'msg':msg,'id':cid}#JSON
 			return render(request, 'verified.html',dic)
 @csrf_exempt
-def verify_user(request):
+def verify_user(srequest):
 	dic={'checksession':checksession(request)}
 	if request.method=='POST':
 		uotp=request.POST.get('otp')
@@ -93,7 +85,8 @@ def checklogin(request):
 				request.session['orgid']=OrganizerData.objects.filter(Org_Email=email)[0].Org_ID
 				return redirect("/index/")
 			else:
-				otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+cid+f+e+p).int
+				org_obj=OrganizerData.objects.filter(Org_Email=email)[0]
+				otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+org_obj.Org_ID+org_obj.Org_Name+org_obj.Org_Password).int
 				otp=str(otp)
 				otp=otp.upper()[0:6]
 				request.session['OTP']=otp#Make Session
@@ -101,8 +94,12 @@ def checklogin(request):
 				msg='''Your OTP is '''+otp+''',
 
 Thanks!'''
-			email=EmailMessage(sub,msg,to=[e])
-			email.send()
+				email=EmailMessage(sub,msg,to=[e])
+			`	email.send()
+				msg="Registered Success! Now Verify Your Email"
+				dic={'msg':msg,'id':org_obj.Org_ID}#JSON
+				return render(request, 'verified.html',dic)
+
 
 		else:
 			dic={'msg':'Incorrect Email/Password'}

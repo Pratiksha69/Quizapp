@@ -56,8 +56,8 @@
             <h2>Verified Email</h2>
 
             <div class="form-input">
-                <label for="name">Verified OTP</label>
-                <input  type="text" name="otp" placeholder="Enter OTP Here">
+                <label for="name">Enter OTP sent on your email</label>
+                <input  type="text" name="otp" placeholder="{{ msg|safe }}">
                 <input  type="hidden" value="{{ id|safe }}" name="id">
             </div>
             <div class="form-input pt-30">

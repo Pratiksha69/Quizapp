@@ -9,6 +9,7 @@ from webapp.myutil import *
 # Create your views here.
 def index(request):
 	dic={'checksession':checksession(request)}
+	print(dic)
 	return render(request, 'index.html',dic)
 def verified(request):
 	dic={'checksession':checksession(request)}
@@ -66,6 +67,7 @@ def verify_user(request):
 		sotp=request.session['OTP']
 		if uotp==sotp:
 			OrganizerData.objects.filter(Org_ID=orgid).update(Status='Active')
+			request.session['org_id'] = orgid
 			return redirect('/index/')
 		else:
 			dic={'id':orgid,'msg':'Incorrect OTP'}
@@ -90,7 +92,7 @@ def checklogin(request):
 		password=request.POST.get('password')
 		if OrganizerData.objects.filter(Org_Email=email,Org_Password=password).exists():
 			if OrganizerData.objects.filter(Org_Email=email,Status='Active').exists():
-				request.session['orgid']=OrganizerData.objects.filter(Org_Email=email)[0].Org_ID
+				request.session['org_id']=OrganizerData.objects.filter(Org_Email=email)[0].Org_ID
 				return redirect("/index/")
 			else:
 				orgobj=OrganizerData.objects.filter(Org_Email=email)[0]
@@ -102,7 +104,7 @@ def checklogin(request):
 				msg='''Your OTP is '''+otp+''',
 
 Thanks!'''
-				email=EmailMessage(sub,msg,to=[e])
+				email=EmailMessage(sub,msg,to=[orgobj.Org_Email])
 				email.send()
 				dic={'id':orgobj.Org_ID}
 				return render(request, 'verified.html',dic)

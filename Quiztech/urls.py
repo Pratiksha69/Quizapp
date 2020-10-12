@@ -17,24 +17,29 @@ from django.contrib import admin
 from django.urls import path
 from webapp.views import *
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/',index),
-    path('verified/',verified),
     path('register/',register),
     path('login/',login),
-    path('elements/',elements),
     path('courses/',courses),
     path('contact/',contact),
     path('blog_details/',blog_details),
     path('blog/',blog),
     path('about/',about),
-    #path('verified/',verified),
-    #path('customer/',customer),
-    
+    path('index/',index),
+    path('verified/',verified),
     path('login2/',login2),
     path('OrgSave/',OrgSave),
+
+    path('dashbord/',dashbord),
+    path('quizregistration/',quizregistration),
+
+
     path('hello/',hello),
     path('verifyuser/',verify_user),
     path('checklogin/',checklogin),
+
 ]

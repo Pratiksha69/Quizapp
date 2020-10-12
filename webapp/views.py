@@ -18,7 +18,6 @@ def register(request):
 	return render(request, 'register.html',dic)
 @csrf_exempt
 def OrgSave(request):
-	dic={'checksession':checksession(request)}
 	if request.method=='POST':
 		f=request.POST.get("Fullname")
 		e=request.POST.get("Email")
@@ -58,7 +57,6 @@ Thanks!'''
 			return render(request, 'verified.html',dic)
 @csrf_exempt
 def verify_user(request):
-	dic={'checksession':checksession(request)}
 	if request.method=='POST':
 		uotp=request.POST.get('otp')
 		orgid=request.POST.get('id')
@@ -67,14 +65,9 @@ def verify_user(request):
 			OrganizerData.objects.filter(Org_ID=orgid).update(Status='Active')
 			return redirect('/index/')
 		else:
-			dic={'id':orgid
-			,'msg':'Incorrect OTP'}
+			dic={'id':orgid,'msg':'Incorrect OTP'}
 			return render(request, 'verified.html',dic)
-		email=EmailMessage(sub,msg,to=[e])
-		email.send()
-		msg=" verified Email! Now login"
-		dic={'msg':msg,'id':orgid}#JSON
-		return render(request, 'login.html',dic)
+
 @csrf_exempt
 def checklogin(request):
 	if request.method=='POST':

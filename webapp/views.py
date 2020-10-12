@@ -8,16 +8,21 @@ import datetime
 # Create your views here.
 def index(request):
 	return render(request, 'index.html',{})
-
+def verified(request):
+	return render(request, 'verified.html',{})
 def register(request):
 	return render(request, 'register.html',{})
+def dashbord(request):
+	return render(request,'dashbord.html',{})
+def quizregistration(request):
+	return render(request,'quizregistration.html',{})
 @csrf_exempt
 def OrgSave(request):
 	if request.method=='POST':
 		f=request.POST.get("Fullname")
 		e=request.POST.get("Email")
 		p=request.POST.get("Password")
-
+		#OrganizerData.objects.all().delete()
 		#to generate the ID
 		c="ORG00"
 		x=1
@@ -26,22 +31,42 @@ def OrgSave(request):
 			x=x+1 #2
 			cid=c+str(x)
 		x=int(x)
-
 		#Generate OTP
 		otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+cid+f+e+p).int
 		otp=str(otp)
 		otp=otp.upper()[0:6]
 		request.session['OTP']=otp#Make Session
-		OrganizerData(
-			Org_ID=cid,
-			Org_Name=f,
-			Org_Email=e,
-			Org_Password=p,
-			).save()
+		if OrganizerData.objects.filter(Org_Email=e).exists():
+			dic={'msg':'Already Exists'}
+			return render(request, 'register.html',dic)
+		else:
+			OrganizerData(
+				Org_ID=cid,
+				Org_Name=f,
+				Org_Email=e,
+				Org_Password=p,
+				).save()
+			sub='QuizAPP OTP'
+			msg='''Your OTP is '''+otp+''',
 
-		msg="Registered Success! Now Verify Your Email"
-		dic={'msg':msg}#JSON
-		return render(request, 'register.html',dic)
+Thanks!'''
+			email=EmailMessage(sub,msg,to=[e])
+			email.send()
+			msg="Registered Success! Now Verify Your Email"
+			dic={'msg':msg,'id':cid}#JSON
+			return render(request, 'verified.html',dic)
+@csrf_exempt
+def verify_user(request):
+	if request.method=='POST':
+		uotp=request.POST.get('otp')
+		orgid=request.POST.get('id')
+		sotp=request.session['OTP']
+		if uotp==sotp:
+			OrganizerData.objects.filter(Org_ID=orgid).update(Status='Active')
+			return render(request,'index.html',{})
+		else:
+			dic={'id':cid,'msg':'Incorrect OTP'}
+			return render(request, 'verified.html',dic)
 
 def login(request):
 	return render(request, 'login.html',{})
@@ -67,3 +92,5 @@ Thanks'''
 	email=EmailMessage(sub,msg,to=['tpratiksha692@gmail.com'])
 	email.send()
 
+def hello(request):
+	return render(request,'hello.html',{})

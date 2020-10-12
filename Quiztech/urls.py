@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from webapp.views import *
-from app.views import *
+
 
 
 urlpatterns = [
@@ -31,10 +31,9 @@ urlpatterns = [
     path('about/',about),
     path('index/',index),
     path('verified/',verified),
-    path('customer/',customer),
     path('login2/',login2),
     path('OrgSave/',OrgSave),
     path('dashbord/',dashbord),
+    path('quizregistration/',quizregistration),
 
-
-
+]

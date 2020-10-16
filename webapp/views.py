@@ -122,6 +122,11 @@ Thanks!'''
 		else:
 			dic={'msg':'Incorrect Email/Password'}
 			return render(request,'login.html',dic)
+
+def logout(request):
+	del request.session['org_id']
+	return redirect('/index/')
+
 def login(request):
 	return render(request, 'login.html',{})
 def elements(request):

@@ -59,21 +59,19 @@
                                     <!-- Main-menu -->
                                     <div class="main-menu d-none d-lg-block">
                                         <nav>
-                                            <ul id="navigation">                                                                                          
-                                                <li class="active" ><a href="index.html"></a></li>
-                                                <li><a href="courses.html"></a></li>
-                                                <li><a href="about.html"></a>my profile</li>
-                                                <li><a href="#"></a>
-                                                    <ul class="submenu">
-                                                        <li><a href="blog.html"></a></li>
-                                                        <li><a href="blog_details.html"></a></li>
-                                                        <li><a href="elements.html"></a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="contact.html"></a></li>
+                                            <ul id="navigation">                               
+                                                <li class="active" ><a href="/index/">Home</a></li>
+                                                <li><a href="/about/">About</a></li>
+                                                <li><a href="/contact/">Contact</a></li>
                                                 <!-- Button -->
-                                                <li class="button-header margin-left "><a href="#" class="btn">start quiz</a></li>
-                                                <li class="button-header"><a href="login.html" class="btn btn3">create quiz</a></li>
+                                                {% if checksession %}
+                                                <li class="button-header margin-left "><a href="#" class="btn">Create Quiz</a></li>
+                                                <li class="button-header"><a href="/logout/" class="btn btn3">Logout</a></li>
+                                                sessionStorage.clear()
+                                                {% else %}
+                                                <li class="button-header margin-left "><a href="/register/" class="btn">Sign Up</a></li>
+                                                <li class="button-header"><a href="/login/" class="btn btn3">Log in</a></li>
+                                                {% endif %}                                                       
                                             </ul>
                                         </nav>
                                     </div>

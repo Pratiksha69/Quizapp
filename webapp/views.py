@@ -12,12 +12,12 @@ def index(request):
 	print(dic)
 	return render(request, 'index.html',dic)
 def verified(request):
-	dic={'checksession':checksession(request)}
-	return render(request, 'verified.html',dic)
+	return render(request, 'verified.html',{})
 def register(request):
 
 	return render(request, 'register.html',{})
 def dashbord(request):
+	dic={'checksession':checksession(request)}
 	return render(request,'dashbord.html',{})
 def quizregistration(request):
 	return render(request,'quizregistration.html',{})
@@ -67,7 +67,10 @@ Thanks!'''
 			dic={'msg':msg,'id':cid}#JSON
 			return render(request, 'verified.html',dic)
 @csrf_exempt
+
+
 def verify_user(request):
+
 	if request.method=='POST':
 		uotp=request.POST.get('otp')
 		orgid=request.POST.get('id')
@@ -102,8 +105,13 @@ def checklogin(request):
 				request.session['org_id']=OrganizerData.objects.filter(Org_Email=email)[0].Org_ID
 				return redirect("/index/")
 			else:
+
+				org_obj=OrganizerData.objects.filter(Org_Email=email)[0]
+				otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+org_obj.Org_ID+org_obj.Org_Name+org_obj.Org_Password).int
+
 				orgobj=OrganizerData.objects.filter(Org_Email=email)[0]
 				otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+orgobj.Org_ID+orgobj.Org_Name+orgobj.Org_Email+orgobj.Org_Password).int
+
 				otp=str(otp)
 				otp=otp.upper()[0:6]
 				request.session['OTP']=otp#Make Session
@@ -111,16 +119,23 @@ def checklogin(request):
 				msg='''Your OTP is '''+otp+''',
 
 Thanks!'''
-				email=EmailMessage(sub,msg,to=[orgobj.Org_Email])
+
+				email=EmailMessage(sub,msg,to=[e])
 				email.send()
-				dic={'id':orgobj.Org_ID}
+				msg="Registered Success! Now Verify Your Email"
+				dic={'msg':msg,'id':org_obj.Org_ID}#JSON
 				return render(request, 'verified.html',dic)
+
 		else:
 			dic={'msg':'Incorrect Email/Password'}
 			return render(request,'login.html',dic)
+
+def logout(request):
+	del request.session['org_id']
+	return redirect('/index/')
+
 def login(request):
-	dic={'checksession':checksession(request)}
-	return render(request, 'login.html',dic)
+	return render(request, 'login.html',{})
 def elements(request):
 	dic={'checksession':checksession(request)}
 	return render(request, 'elements.html',dic)
@@ -139,12 +154,16 @@ def blog(request):
 def about(request):
 	dic={'checksession':checksession(request)}
 	return render(request, 'about.html',dic)
+
 def login2(request):
 	dic={'checksession':checksession(request)}
 	return render(request, 'login2.html',dic)
 def createquiz(request):
 	return render(request,'createquiz.html',dic)
 
+
+
+	
 def sendmail():
 	sub='Test QuizAPP otp'
 	msg=''' OTP Success

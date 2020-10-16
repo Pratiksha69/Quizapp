@@ -17,8 +17,6 @@ from django.contrib import admin
 from django.urls import path
 from webapp.views import *
 
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/',index),
@@ -31,7 +29,6 @@ urlpatterns = [
     path('about/',about),
     path('index/',index),
     path('verified/',verified),
-    path('login2/',login2),
     path('OrgSave/',OrgSave),
 
     path('dashbord/',dashbord),
@@ -41,5 +38,6 @@ urlpatterns = [
     path('hello/',hello),
     path('verifyuser/',verify_user),
     path('checklogin/',checklogin),
+    path('resendotp/',resendotp),
 
 ]

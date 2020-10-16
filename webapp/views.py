@@ -9,16 +9,19 @@ from webapp.myutil import *
 # Create your views here.
 def index(request):
 	dic={'checksession':checksession(request)}
+	print(dic)
 	return render(request, 'index.html',dic)
 def verified(request):
-	dic={'checksession':checksession(request)}
-	return render(request, 'verified.html',dic)
+	return render(request, 'verified.html',{})
 def register(request):
+	return render(request, 'register.html',{})
+def dashbord(request):
 	dic={'checksession':checksession(request)}
-	return render(request, 'register.html',dic)
+	return render(request,'dashbord.html',{})
+def quizregistration(request):
+	return render(request,'quizregistration.html',{})
 @csrf_exempt
 def OrgSave(request):
-	dic={'checksession':checksession(request)}
 	if request.method=='POST':
 		f=request.POST.get("Fullname")
 		e=request.POST.get("Email")
@@ -57,24 +60,34 @@ Thanks!'''
 			dic={'msg':msg,'id':cid}#JSON
 			return render(request, 'verified.html',dic)
 @csrf_exempt
-def verify_user(srequest):
-	dic={'checksession':checksession(request)}
+
+
+def verify_user(request):
+
 	if request.method=='POST':
 		uotp=request.POST.get('otp')
 		orgid=request.POST.get('id')
 		sotp=request.session['OTP']
 		if uotp==sotp:
 			OrganizerData.objects.filter(Org_ID=orgid).update(Status='Active')
+			request.session['org_id'] = orgid
 			return redirect('/index/')
 		else:
-			dic={'id':orgid
-			,'msg':'Incorrect OTP'}
+			dic={'id':orgid,'msg':'Incorrect OTP'}
 			return render(request, 'verified.html',dic)
-		email=EmailMessage(sub,msg,to=[e])
-		email.send()
-		msg=" verified Email! Now login"
-		dic={'msg':msg,'id':orgid}#JSON
-		return render(request, 'login.html',dic)
+def resendotp(request):
+	orgid=request.GET.get('orgid')
+	orgobj=OrganizerData.objects.filter(Org_ID=orgid)[0]
+	otp=request.session['OTP']
+	sub='QuizAPP OTP'
+	msg='''Your OTP is '''+otp+''',
+
+Thanks!'''
+	email=EmailMessage(sub,msg,to=[orgobj.Org_Email])
+	email.send()
+	dic={'id':orgid}
+	return render(request, 'verified.html',dic)
+
 @csrf_exempt
 def checklogin(request):
 	if request.method=='POST':
@@ -82,11 +95,16 @@ def checklogin(request):
 		password=request.POST.get('password')
 		if OrganizerData.objects.filter(Org_Email=email,Org_Password=password).exists():
 			if OrganizerData.objects.filter(Org_Email=email,Status='Active').exists():
-				request.session['orgid']=OrganizerData.objects.filter(Org_Email=email)[0].Org_ID
+				request.session['org_id']=OrganizerData.objects.filter(Org_Email=email)[0].Org_ID
 				return redirect("/index/")
 			else:
+
 				org_obj=OrganizerData.objects.filter(Org_Email=email)[0]
 				otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+org_obj.Org_ID+org_obj.Org_Name+org_obj.Org_Password).int
+
+				orgobj=OrganizerData.objects.filter(Org_Email=email)[0]
+				otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+orgobj.Org_ID+orgobj.Org_Name+orgobj.Org_Email+orgobj.Org_Password).int
+
 				otp=str(otp)
 				otp=otp.upper()[0:6]
 				request.session['OTP']=otp#Make Session
@@ -94,19 +112,18 @@ def checklogin(request):
 				msg='''Your OTP is '''+otp+''',
 
 Thanks!'''
+
 				email=EmailMessage(sub,msg,to=[e])
-			`	email.send()
+				email.send()
 				msg="Registered Success! Now Verify Your Email"
 				dic={'msg':msg,'id':org_obj.Org_ID}#JSON
 				return render(request, 'verified.html',dic)
-
 
 		else:
 			dic={'msg':'Incorrect Email/Password'}
 			return render(request,'login.html',dic)
 def login(request):
-	dic={'checksession':checksession(request)}
-	return render(request, 'login.html',dic)
+	return render(request, 'login.html',{})
 def elements(request):
 	dic={'checksession':checksession(request)}
 	return render(request, 'elements.html',dic)
@@ -125,10 +142,8 @@ def blog(request):
 def about(request):
 	dic={'checksession':checksession(request)}
 	return render(request, 'about.html',dic)
-def login2(request):
-	dic={'checksession':checksession(request)}
-	return render(request, 'login2.html',dic)
 
+	
 def sendmail():
 	sub='Test QuizAPP otp'
 	msg=''' OTP Success

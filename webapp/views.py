@@ -159,11 +159,9 @@ def login2(request):
 	dic={'checksession':checksession(request)}
 	return render(request, 'login2.html',dic)
 def createquiz(request):
+	dic={'checksession':checksession(request)}
 	return render(request,'createquiz.html',dic)
 
-
-
-	
 def sendmail():
 	sub='Test QuizAPP otp'
 	msg=''' OTP Success

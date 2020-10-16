@@ -42,6 +42,7 @@ urlpatterns = [
 
     path('resendotp/',resendotp),
     path('logout/',logout),
+    path('createquiz/',createquiz),
 
 
 ]

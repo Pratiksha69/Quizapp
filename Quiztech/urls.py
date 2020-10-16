@@ -41,6 +41,9 @@ urlpatterns = [
     path('hello/',hello),
     path('verifyuser/',verify_user),
     path('checklogin/',checklogin),
-    path('createquiz/',createquiz),
+
+
+    path('resendotp/',resendotp),
+
 
 ]

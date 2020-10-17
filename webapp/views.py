@@ -161,6 +161,30 @@ def login2(request):
 def createquiz(request):
 	dic={'checksession':checksession(request)}
 	return render(request,'createquiz.html',dic)
+	@csrf_exempt
+def QZSave(request):
+	if request.method=='POST':
+		qn=request.POST.get("Quiz Name")
+		qc=request.POST.get("Quiz Category")
+		nq=request.POST.get("No of Quiestions in Quiz")
+		mpq=request.POST.get("Marks Per Quiestion ")
+		QuizData.objects.all().delete()
+		#to generate the ID
+		q="QZ00"
+		x=1
+		qid=c+str(x)
+		while QuizData.objects.filter(QZ_ID=qid).exists():
+			x=x+1 #2
+			qid=q+str(x)
+		x=int(x)
+		else:
+			QuizData(
+				QZ_ID=qid,
+				QZ_Name=qn,
+				QZ_Questions=nq,
+                QZ_Marks=mpq,
+				).save()
+
 
 def sendmail():
 	sub='Test QuizAPP otp'

@@ -38,7 +38,7 @@ urlpatterns = [
     path('hello/',hello),
     path('verifyuser/',verify_user),
     path('checklogin/',checklogin),
-
+    
 
     path('resendotp/',resendotp),
     path('logout/',logout),

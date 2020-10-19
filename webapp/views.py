@@ -177,19 +177,17 @@ def QZSave(request):
 			x=x+1 #2
 			qid=q+str(x)
 		x=int(x)
-		else:
-			QuizData(
-				QZ_ID=qid,
-				QZ_Name=qn,
-				QZ_Questions=nq,
-                QZ_Marks=mpq,
-				).save()
+		QuizData(
+		QZ_ID=qid,
+		QZ_Name=qn,
+		QZ_Questions=nq,
+        QZ_Marks=mpq,
+		).save()
 
 
 def sendmail():
 	sub='Test QuizAPP otp'
 	msg=''' OTP Success
-Thanks'''
 	email=EmailMessage(sub,msg,to=['tpratiksha692@gmail.com'])
 	email.send()
 

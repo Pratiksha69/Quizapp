@@ -38,10 +38,12 @@ urlpatterns = [
     path('hello/',hello),
     path('verifyuser/',verify_user),
     path('checklogin/',checklogin),
+    path('candidatelogin/',candidatelogin),
     
 
     path('resendotp/',resendotp),
     path('logout/',logout),
+    path('createquiz/',createquiz),
 
 
 ]

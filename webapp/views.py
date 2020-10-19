@@ -177,12 +177,14 @@ def QZSave(request):
 			x=x+1 #2
 			qid=q+str(x)
 		x=int(x)
-		QuizData(
+		Obj=QuizData(
 		QZ_ID=qid,
 		QZ_Name=qn,
 		QZ_Questions=nq,
         QZ_Marks=mpq,
-		).save()
+		)
+		if not QuizData.objects.filter(QZ_Name=qn).exists():
+			
 
 
 def sendmail():

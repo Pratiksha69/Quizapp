@@ -120,21 +120,29 @@
         <div style="width:100%;padding:50px;"class="w3-black">
         	<table class="w3-table-all">
         		<tr class="w3-red">
-        			<th>Quiz ID</th>
+        			<th>Publish Action</th>
         			<th>Quiz Name</th>
-        			<th>No. Of Question</th>
-        			<th>Max. Time</th>
+                    <th>Category</th>
+        			<th>No. of Questions</th>
         			<th>Marks Per Question</th>
+                    <th>Max. Time</th>
         			<th>Action</th>
         		</tr>
+                {% for x in data %}
         		<tr style="color:black;">
-        			<td>IO678</td>
-        			<td>ABC</td>
-        			<td>10</td>
-        			<td>30</td>
-        			<td>2</td>
-        			<td><a class="w3-button w3-blue w3-hover-black"href="">Open</a></td>
+                    {% if x.Status == 'Deactive' %}
+        			<td><a class="w3-button w3-green w3-hover-black"href="">Publish</a></td>
+                    {% else %}
+                    <td><a class="w3-button w3-red w3-hover-black"href="">Un-Publish</a></td>
+                    {% endif %}
+        			<td>{{ x.Quiz_Name|safe }}</td>
+        			<td>{{ x.Quiz_Category|safe }}</td>
+        			<td>{{ x.Question_Count|safe }} Questions</td>
+        			<td>{{ x.Marks_Per_Ques|safe }}</td>
+                    <td>{{ x.Maximum_Time|safe }} minutes</td>
+        			<td><a class="w3-button w3-blue w3-hover-black"href="/quizdash/?id={{ x.Quiz_ID|safe }}">Open</a></td>
         		</tr>
+                {% endfor %}
         	</table>
         </div>
         

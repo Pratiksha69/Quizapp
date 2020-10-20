@@ -34,7 +34,7 @@ def OrgSave(request):
 		f=request.POST.get("Fullname")
 		e=request.POST.get("Email")
 		p=request.POST.get("Password")
-		OrganizerData.objects.all().delete()
+		#OrganizerData.objects.all().delete()
 		#to generate the ID
 		c="ORG00"
 		x=1
@@ -71,7 +71,6 @@ Thanks!'''
 
 
 def verify_user(request):
-
 	if request.method=='POST':
 		uotp=request.POST.get('otp')
 		orgid=request.POST.get('id')
@@ -83,6 +82,7 @@ def verify_user(request):
 		else:
 			dic={'id':orgid,'msg':'Incorrect OTP'}
 			return render(request, 'verified.html',dic)
+
 def resendotp(request):
 	orgid=request.GET.get('orgid')
 	orgobj=OrganizerData.objects.filter(Org_ID=orgid)[0]
@@ -156,35 +156,83 @@ def about(request):
 	dic={'checksession':checksession(request)}
 	return render(request, 'about.html',dic)
 
-def login2(request):
-	dic={'checksession':checksession(request)}
-	return render(request, 'login2.html',dic)
 def createquiz(request):
 	dic={'checksession':checksession(request)}
 	return render(request,'createquiz.html',dic)
+
 @csrf_exempt
-def QZSave(request):
+def savequiz(request):
 	if request.method=='POST':
-		qn=request.POST.get("Quiz Name")
-		qc=request.POST.get("Quiz Category")
-		nq=request.POST.get("No of Quiestions in Quiz")
-		mpq=request.POST.get("Marks Per Quiestion ")
-		QuizData.objects.all().delete()
+		name = request.POST.get("name")
+		category = request.POST.get("category")
+		quesno = request.POST.get("quesno")
+		marks = request.POST.get("marks")
+		time = request.POST.get("time")
+		#uizData.objects.all().delete()
 		#to generate the ID
 		q="QZ00"
 		x=1
-		qid=c+str(x)
-		while QuizData.objects.filter(QZ_ID=qid).exists():
+		qid=q+str(x)
+		while QuizData.objects.filter(Quiz_ID=qid).exists():
 			x=x+1 #2
 			qid=q+str(x)
 		x=int(x)
-		QuizData(
-		QZ_ID=qid,
-		QZ_Name=qn,
-		QZ_Questions=nq,
-        QZ_Marks=mpq,
-		).save()
+		if not QuizData.objects.filter(Quiz_Name=name).exists():
+			QuizData(
+				Quiz_ID=qid,
+				Org_ID=request.session['org_id'],
+				Quiz_Name=name,
+				Quiz_Category=category,
+				Question_Count=quesno,
+				Marks_Per_Ques=marks,
+				Maximum_Time=time
+				).save()
+			return redirect('/organizerdashboard/')
+		else:
+			dic={'checksession':checksession(request), 'msg':'Choose a different Name of Quiz....'}
+			return render(request,'createquiz.html',dic)
+	else:
+		return HttpResponse('Error 404 Not Found')
+
 def organizerdashboard(request):
-	return render(request,'organizerdashboard.html',{})
+	dic={'checksession':checksession(request),
+		'data':QuizData.objects.filter(Org_ID=request.session['org_id'])}
+	return render(request,'organizerdashboard.html',dic)
+
 def quizdash(request):
-	return render(request,'quizdash.html',{})
+	quizid = request.GET.get('id')
+	request.session['quiz_id'] = quizid
+	dic={'checksession':checksession(request),
+		'data':QuizData.objects.filter(Quiz_ID=quizid)[0],
+		'questions':QuestionData.objects.filter(Quiz_ID=quizid)}
+	return render(request,'quizdash.html',dic)
+
+@csrf_exempt
+def savequestion(request):
+	if request.method=='POST':
+		ques = request.POST.get('question')
+		option_a = request.POST.get('a')
+		option_b = request.POST.get('b')
+		option_c = request.POST.get('c')
+		option_d = request.POST.get('d')
+		answer = request.POST.get('answer')
+		q="QUES00"
+		x=1
+		qid=q+str(x)
+		while QuestionData.objects.filter(Question_ID=qid).exists():
+			x=x+1 #2
+			qid=q+str(x)
+		x=int(x)
+		QuestionData(
+			Question_ID=qid,
+			Quiz_ID=request.session['quiz_id'],
+			Question=ques,
+			Option_A=option_a,
+			Option_B=option_b,
+			Option_C=option_c,
+			Option_D=option_d,
+			Answer=answer
+			).save()
+		return redirect('/quizdash/?id='+request.session['quiz_id'])
+	else:
+		return HttpResponse('Error 404 Not Found')

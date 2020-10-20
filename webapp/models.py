@@ -19,6 +19,19 @@ class QuizData(models.Model):
 	Quiz_Category=models.CharField(max_length=50)
 	Question_Count=models.CharField(max_length=5)
 	Marks_Per_Ques=models.CharField(max_length=5)
+	Maximum_Time=models.CharField(max_length=20, default='10')
 	Status=models.CharField(max_length=10, default='Deactive')
 	class Meta:
 		db_table="QuizData"
+
+class QuestionData(models.Model):
+	Question_ID=models.CharField(max_length=20, primary_key=True)
+	Quiz_ID=models.CharField(max_length=20)
+	Question=models.CharField(max_length=1000)
+	Option_A=models.CharField(max_length=100)
+	Option_B=models.CharField(max_length=100)
+	Option_C=models.CharField(max_length=100)
+	Option_D=models.CharField(max_length=100)
+	Answer=models.CharField(max_length=100)
+	class Meta:
+		db_table="QuestionData"

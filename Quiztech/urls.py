@@ -30,12 +30,13 @@ urlpatterns = [
     path('index/',index),
     path('verified/',verified),
     path('OrgSave/',OrgSave),
+    path('QZSave/',QZSave),
+    path('quizdash/',quizdash),
+    path('organizerdashboard/',organizerdashboard),
 
     path('dashbord/',dashbord),
     path('quizregistration/',quizregistration),
 
-
-    path('hello/',hello),
     path('verifyuser/',verify_user),
     path('checklogin/',checklogin),
     path('candidatelogin/',candidatelogin),

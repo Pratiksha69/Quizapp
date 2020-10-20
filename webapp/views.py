@@ -162,13 +162,29 @@ def login2(request):
 def createquiz(request):
 	dic={'checksession':checksession(request)}
 	return render(request,'createquiz.html',dic)
-
-def sendmail():
-	sub='Test QuizAPP otp'
-	msg=''' OTP Success
-Thanks'''
-	email=EmailMessage(sub,msg,to=['tpratiksha692@gmail.com'])
-	email.send()
-
-def hello(request):
-	return render(request,'hello.html',{})
+@csrf_exempt
+def QZSave(request):
+	if request.method=='POST':
+		qn=request.POST.get("Quiz Name")
+		qc=request.POST.get("Quiz Category")
+		nq=request.POST.get("No of Quiestions in Quiz")
+		mpq=request.POST.get("Marks Per Quiestion ")
+		QuizData.objects.all().delete()
+		#to generate the ID
+		q="QZ00"
+		x=1
+		qid=c+str(x)
+		while QuizData.objects.filter(QZ_ID=qid).exists():
+			x=x+1 #2
+			qid=q+str(x)
+		x=int(x)
+		QuizData(
+		QZ_ID=qid,
+		QZ_Name=qn,
+		QZ_Questions=nq,
+        QZ_Marks=mpq,
+		).save()
+def organizerdashboard(request):
+	return render(request,'organizerdashboard.html',{})
+def quizdash(request):
+	return render(request,'quizdash.html',{})

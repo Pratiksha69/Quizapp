@@ -21,7 +21,8 @@ def dashbord(request):
 	return render(request,'dashbord.html',{})
 def quizregistration(request):
 	return render(request,'quizregistration.html',{})
-
+def candidatelogin(request):
+	return render(request,'candidatelogin.html',{})
 
 	dic={'checksession':checksession(request)}
 	return render(request, 'register.html',dic)
@@ -161,7 +162,7 @@ def login2(request):
 def createquiz(request):
 	dic={'checksession':checksession(request)}
 	return render(request,'createquiz.html',dic)
-	@csrf_exempt
+@csrf_exempt
 def QZSave(request):
 	if request.method=='POST':
 		qn=request.POST.get("Quiz Name")
@@ -179,19 +180,26 @@ def QZSave(request):
 		x=int(x)
 		Obj=QuizData(
 		QZ_ID=qid,
-		QZ_Name=qn,
 		QZ_Questions=nq,
         QZ_Marks=mpq,
+
 		)
 		if not QuizData.objects.filter(QZ_Name=qn).exists():
+			return redirect(request,'createquiz.html',{})
 			
 
 
 def sendmail():
 	sub='Test QuizAPP otp'
-	msg=''' OTP Success
+	msg=''' OTP Success'''
 	email=EmailMessage(sub,msg,to=['tpratiksha692@gmail.com'])
 	email.send()
 
 def hello(request):
 	return render(request,'hello.html',{})
+		
+def organizerdashboard(request):
+	return render(request,'organizerdashboard.html',{})
+def quizdash(request):
+	return render(request,'quizdash.html',{})
+

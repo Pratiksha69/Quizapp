@@ -1,5 +1,7 @@
+
 <!doctype html>
 {% load static %}
+
 <html class="no-js" lang="zxx">
 <head>
     <meta charset="utf-8">
@@ -25,6 +27,7 @@
     <link rel="stylesheet" href="{% static '/assets/css/slick.css' %}">
     <link rel="stylesheet" href="{% static '/assets/css/nice-select.css' %}">
     <link rel="stylesheet" href="{% static '/assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'w3.css' %}">
     
 </head>
 
@@ -41,8 +44,8 @@
         </div>
     </div>
     <!-- Preloader Start -->
+    <!-- Header Start -->
     <header>
-        <!-- Header Start -->
         <div class="header-area header-transparent">
             <div class="main-header ">
                 <div class="header-bottom  header-sticky">
@@ -61,8 +64,8 @@
                                         <nav>
                                             <ul id="navigation">                                                                                          
                                                 <li class="active" ><a href="/index/">Home</a></li>
-                                                <li><a href="/createquiz/">About</a></li>
-                                                <li><a href="/createquiz/">Contact</a></li>
+                                                <li><a href="/about/">About</a></li>
+                                                <li><a href="/contact/">Contact</a></li>
                                                 <!-- Button -->
                                                 {% if checksession %}
                                                 <li class="button-header margin-left "><a href="/createquiz/" class="btn">Create Quiz</a></li>
@@ -86,21 +89,27 @@
                 </div>
             </div>
         </div>
-        <!-- Header End -->
     </header>
+    <!-- Header End -->
     <main>
         <!--? slider Area Start-->
-        <section class="slider-area">
+        <section class="slider-area slider-area2">
             <div class="slider-active">
                 <!-- Single Slider -->
-                <div class="single-slider slider-height d-flex align-items-center">
+                <div class="single-slider slider-height2">
                     <div class="container">
                         <div class="row">
-                            <div class="col-xl-6 col-lg-7 col-md-12">
-                                <div class="hero__caption">
-                                    <h1 data-animation="fadeInLeft" data-delay="0.2s">Online learning<br> platform</h1>
-                                    <p data-animation="fadeInLeft" data-delay="0.4s">Build skills with courses, certificates, and degrees online from world-class universities and companies</p>
-                                    <a href="#" class="btn hero-btn" data-animation="fadeInLeft" data-delay="0.7s">Join for Free</a>
+                            <div class="col-xl-8 col-lg-11 col-md-12">
+                                <div class="hero__caption hero__caption2">
+                                    <h1 data-animation="bounceIn" data-delay="0.2s">Quiz Dashboard</h1>
+                                    <!-- breadcrumb Start-->
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                            <li class="breadcrumb-item"><a href="#">about</a></li> 
+                                        </ol>
+                                    </nav>
+                                    <!-- breadcrumb End -->
                                 </div>
                             </div>
                         </div>
@@ -108,131 +117,52 @@
                 </div>
             </div>
         </section>
-        <!-- ? services-area -->
-        <div class="services-area">
-            <div class="container">
-                <div class="row justify-content-sm-center">
-                    <div class="col-lg-4 col-md-6 col-sm-8">
-                        <div class="single-services mb-30">
-                            <div class="features-icon">
-                                <img src="{% static '/assets/img/icon/icon1.svg' %}" alt="">
-                            </div>
-                            <div class="features-caption">
-                                <h3>60+ UX courses</h3>
-                                <p>The automated process all your website tasks.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-8">
-                        <div class="single-services mb-30">
-                            <div class="features-icon">
-                                <img src="{% static '/assets/img/icon/icon2.svg' %}" alt="">
-                            </div>
-                            <div class="features-caption">
-                                <h3>Expert instructors</h3>
-                                <p>The automated process all your website tasks.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-8">
-                        <div class="single-services mb-30">
-                            <div class="features-icon">
-                                <img src="{% static '/assets/img/icon/icon3.svg' %}" alt="">
-                            </div>
-                            <div class="features-caption">
-                                <h3>Life time access</h3>
-                                <p>The automated process all your website tasks.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div style="width:100%;padding:50px;"class="w3-blue">
+        	<div class="w3-bar">
+                <a class="w3-button w3-white w3-hover-black"href="">Candidate List</a>
+                <a class="w3-button w3-white w3-hover-black"href="">Deactive Quiz</a>
+                <a class="w3-button w3-white w3-hover-black"href="">Results</a>
             </div>
+            <div style="padding:20px;margin:20px;"class="w3-container w3-white">
+                <form>
+                    <textarea class="w3-input" placeholder="Enter Question Here"></textarea>
+                    <input style="margin-top:20px;"class="w3-input" type="text" placeholder="Option A">
+                    <input style="margin-top:20px;"class="w3-input" type="text" placeholder="Option B">
+                    <input style="margin-top:20px;"class="w3-input" type="text" placeholder="Option C">
+                    <input style="margin-top:20px;"class="w3-input" type="text" placeholder="Option D">
+                    <select style="margin-top:20px;"class="w3-select">
+                        <option disabled selected>Select Answer</option>
+                        <option>Option A</option>
+                        <option>Option B</option>
+                        <option>Option C</option>
+                        <option>Option D</option>
+                    </select>
+                    <input style="width:100%;margin-top:20px;"class="w3-button w3-blue w3-hover-black"type="submit" value="Add">
+                </form>
+            </div>
+            <table class="w3-table-all">
+                <tr class="w3-red">
+                    <th>Question</th>
+                    <th>Option A</th>
+                    <th>Option B</th>
+                    <th>Option C</th>
+                    <th>Option D</th>
+                    <th>Answer</th>
+                    <th>Action</th>
+                </tr>
+                <tr style="color:black;">
+                    <td>What is this?</td>
+                    <td>Tea</td>
+                    <td>Coffy</td>
+                    <td>Cold</td>
+                    <td>Soup</td>
+                    <td>Tea</td>
+                    <td><a class="w3-button w3-red w3-hover-black"href="">Delete</a></td>
+                </tr>
+            </table>
         </div>
-        <!--? Team -->
-        <section class="team-area section-padding40 fix">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-7 col-lg-8">
-                        <div class="section-tittle text-center mb-55">
-                            <h2>Our Team</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-active">
-                    <div class="single-cat text-center">
-                        <div class="cat-icon">
-                            <img src="{% static '/assets/img/gallery/team1.png'%" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Pratiksha Tyagi /a></h5>
-                            <p>The automated process all your website tasks.</p>
-                        </div>
-                    </div>
-                    <div class="single-cat text-center">
-                        <div class="cat-icon">
-                            <img src="{% static '/assets/img/gallery/team2.png' %}" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Geeta chaudhari</a></h5>
-                            <p>The automated process all your website tasks.</p>
-                        </div>
-                    </div>
-                    <div class="single-cat text-center">
-                        <div class="cat-icon">
-                            <img src="{% static '/assets/img/gallery/team3.png' %}" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Mr. Shakil</a></h5>
-                            <p>The automated process all your website tasks.</p>
-                        </div>
-                    </div>
-                    <div class="single-cat text-center">
-                        <div class="cat-icon">
-                            <img src="{% static '/assets/img/gallery/team4.png' %}" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Mr. Arafat</a></h5>
-                            <p>The automated process all your website tasks.</p>
-                        </div>
-                    </div>
-                    <div class="single-cat text-center">
-                        <div class="cat-icon">
-                            <img src="{% static '/assets/img/gallery/team3.png' %}" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Mr. saiful</a></h5>
-                            <p>The automated process all your website tasks.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        
         <!-- Services End -->
-        <!--? About Area-2 Start -->
-        <section class="about-area2 fix pb-padding">
-            <div class="support-wrapper align-items-center">
-                <div class="right-content2">
-                    <!-- img -->
-                    <div class="right-img">
-                        <img src="{% static '/assets/img/gallery/about2.png' %}" alt="">
-                    </div>
-                </div>
-                <div class="left-content2">
-                    <!-- section tittle -->
-                    <div class="section-tittle section-tittle2 mb-20">
-                        <div class="front-text">
-                            <h2 class="">Take the next step
-                                toward your personal
-                                and professional goals
-                            with us.</h2>
-                            <p>The automated process all your website tasks. Discover tools and techniques to engage effectively with vulnerable children and young people.</p>
-                            <a href="#" class="btn">Join now for Free</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- About Area End -->
     </main>
     <footer>
      <div class="footer-wrappper footer-bg">
@@ -245,7 +175,7 @@
                             <div class="single-footer-caption mb-30">
                                 <!-- logo -->
                                 <div class="footer-logo mb-25">
-                                    <a href="index.html"><img src="/assets/img/logo/logo2_footer.png" alt=""></a>
+                                    <a href="index.html"><img src="{% static '/assets/img/logo/logo2_footer.png' %}" alt=""></a>
                                 </div>
                                 <div class="footer-tittle">
                                     <div class="footer-pera">
@@ -367,7 +297,7 @@
 <script src="{% static '/assets/js/mail-script.js' %}"></script>
 <script src="{% static '/assets/js/jquery.ajaxchimp.min.js' %} "></script>
 
-<!-- Jquery Plugins, main Jquery -->	
+<!-- Jquery Plugins, main Jquery -->    
 <script src="{% static '/assets/js/plugins.js' %}"></script>
 <script src="{% static '/assets/js/main.js' %}"></script>
 

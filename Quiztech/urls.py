@@ -31,15 +31,17 @@ urlpatterns = [
     path('verified/',verified),
     path('OrgSave/',OrgSave),
     path('QZSave/',QZSave),
+    path('quizdash/',quizdash),
+    path('sendmail/',sendmail),
+    path('organizerdashboard/',organizerdashboard),
 
     path('dashbord/',dashbord),
     path('quizregistration/',quizregistration),
 
-
-    path('hello/',hello),
     path('verifyuser/',verify_user),
     path('checklogin/',checklogin),
-
+    path('candidatelogin/',candidatelogin),
+    
 
     path('resendotp/',resendotp),
     path('logout/',logout),

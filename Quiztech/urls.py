@@ -31,7 +31,8 @@ urlpatterns = [
     path('verified/',verified),
     path('OrgSave/',OrgSave),
     path('quizdash/',quizdash),
-    path('sendmail/',sendmail),
+    path('candidatelist/',candidatelist),
+    path('result/',result),
     path('organizerdashboard/',organizerdashboard),
 
     path('dashbord/',dashbord),

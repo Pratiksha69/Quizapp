@@ -236,3 +236,8 @@ def savequestion(request):
 		return redirect('/quizdash/?id='+request.session['quiz_id'])
 	else:
 		return HttpResponse('Error 404 Not Found')
+
+def deleteques(request):
+	id_=request.GET.get('id')
+	QuestionData.objects.filter(Question_ID=id_).delete()
+	return redirect('/quizdash/')

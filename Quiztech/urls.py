@@ -45,6 +45,7 @@ urlpatterns = [
     path('logout/',logout),
     path('createquiz/',createquiz),
     path('savequiz/',savequiz),
-    path('savequestion/',savequestion)
+    path('savequestion/',savequestion),
+    path('deleteques/',deleteques),
 
 ]

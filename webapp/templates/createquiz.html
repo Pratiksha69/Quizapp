@@ -44,28 +44,32 @@
 
 <!-- Register -->
 
-<main class="login-body" data-vide-bg="/assets/img/login-bg.mp4">
+<main class="login-body" data-vide-bg="{% static 'assets/img/login-bg.mp4' %}">
     <!-- Login Admin -->
-    <form class="form-default" action="/OrgSave/" method="POST">
+    <form class="form-default" action="/savequiz/" method="POST">
         
         <div class="login-form">
             <h2>CREATE QUIZ</h2>
 
             <div class="form-input">
                 <label for="name">Quiz Name</label>
-                <input  type="text" name="quiz name" placeholder="Enter Here....">
+                <input  type="text" name="name" placeholder="Enter Here....">
             </div>
             <div class="form-input">
                 <label for="name">Quiz Category</label>
-                <input type="text" name="quiz category" placeholder="Enter Here....">
+                <input type="text" name="category" placeholder="Enter Here....">
             </div>
             <div class="form-input">
                 <label for="name">No of Quiestions in Quiz</label>
-                <input type="no of quiestion in quiz" name="" placeholder="Enter Here....">
+                <input type="number" name="quesno" placeholder="Enter Here....">
             </div>
             <div class="form-input">
-                <label for="name">Marks Per Quiestion </label>
-                <input type="marks per quiestion" name="marks per quiestion" placeholder="Enter Here....">
+                <label for="name">Marks Per Quiestion</label>
+                <input type="number" name="marks" placeholder="Enter Here....">
+            </div>
+            <div class="form-input">
+                <label for="name">Maximum Time Limit</label>
+                <input type="number" name="time" placeholder="Enter Here....">
             </div>
             <div class="form-input pt-30">
                 <span>{{ msg|safe }}</span>

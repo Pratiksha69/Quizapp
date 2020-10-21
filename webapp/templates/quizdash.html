@@ -101,12 +101,11 @@
                         <div class="row">
                             <div class="col-xl-8 col-lg-11 col-md-12">
                                 <div class="hero__caption hero__caption2">
-                                    <h1 data-animation="bounceIn" data-delay="0.2s">Quiz Dashboard</h1>
+                                    <h1 data-animation="bounceIn" data-delay="0.2s">{{ data.Quiz_Name|safe }} Dashboard</h1>
                                     <!-- breadcrumb Start-->
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                            <li class="breadcrumb-item"><a href="#">about</a></li> 
+                                            <li class="breadcrumb-item"><a href="">{{ data.Quiz_Category|safe }}</a></li> 
                                         </ol>
                                     </nav>
                                     <!-- breadcrumb End -->
@@ -124,18 +123,19 @@
                 <a class="w3-button w3-white w3-hover-black"href="">Results</a>
             </div>
             <div style="padding:20px;margin:20px;"class="w3-container w3-white">
-                <form>
-                    <textarea class="w3-input" placeholder="Enter Question Here"></textarea>
-                    <input style="margin-top:20px;"class="w3-input" type="text" placeholder="Option A">
-                    <input style="margin-top:20px;"class="w3-input" type="text" placeholder="Option B">
-                    <input style="margin-top:20px;"class="w3-input" type="text" placeholder="Option C">
-                    <input style="margin-top:20px;"class="w3-input" type="text" placeholder="Option D">
-                    <select style="margin-top:20px;"class="w3-select">
+                <h1>Add Questions Here</h1>
+                <form action="/savequestion/" method="POST">
+                    <textarea class="w3-input" placeholder="Enter Question Here" name="question"></textarea>
+                    <input style="margin-top:20px;"class="w3-input" type="text" placeholder="Option A" name="a">
+                    <input style="margin-top:20px;"class="w3-input" type="text" placeholder="Option B" name="b">
+                    <input style="margin-top:20px;"class="w3-input" type="text" placeholder="Option C" name="c">
+                    <input style="margin-top:20px;"class="w3-input" type="text" placeholder="Option D" name="d">
+                    <select style="margin-top:20px;"class="w3-select" name="answer">
                         <option disabled selected>Select Answer</option>
-                        <option>Option A</option>
-                        <option>Option B</option>
-                        <option>Option C</option>
-                        <option>Option D</option>
+                        <option value="A">Option A</option>
+                        <option value="B">Option B</option>
+                        <option value="C">Option C</option>
+                        <option value="D">Option D</option>
                     </select>
                     <input style="width:100%;margin-top:20px;"class="w3-button w3-blue w3-hover-black"type="submit" value="Add">
                 </form>
@@ -150,15 +150,17 @@
                     <th>Answer</th>
                     <th>Action</th>
                 </tr>
+                {% for x in questions %}
                 <tr style="color:black;">
-                    <td>What is this?</td>
-                    <td>Tea</td>
-                    <td>Coffy</td>
-                    <td>Cold</td>
-                    <td>Soup</td>
-                    <td>Tea</td>
+                    <td>{{ x.Question|safe }}</td>
+                    <td>{{ x.Option_A|safe }}</td>
+                    <td>{{ x.Option_B|safe }}</td>
+                    <td>{{ x.Option_C|safe }}</td>
+                    <td>{{ x.Option_D|safe }}</td>
+                    <td>{{ x.Answer|safe }}</td>
                     <td><a class="w3-button w3-red w3-hover-black"href="">Delete</a></td>
                 </tr>
+                {% endfor %}
             </table>
         </div>
         

@@ -30,7 +30,6 @@ urlpatterns = [
     path('index/',index),
     path('verified/',verified),
     path('OrgSave/',OrgSave),
-    path('QZSave/',QZSave),
     path('quizdash/',quizdash),
     path('sendmail/',sendmail),
     path('organizerdashboard/',organizerdashboard),
@@ -46,6 +45,7 @@ urlpatterns = [
     path('resendotp/',resendotp),
     path('logout/',logout),
     path('createquiz/',createquiz),
-
+    path('savequiz/',savequiz),
+    path('savequestion/',savequestion)
 
 ]

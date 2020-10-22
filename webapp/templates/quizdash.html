@@ -158,8 +158,12 @@
                     <td>{{ x.Option_C|safe }}</td>
                     <td>{{ x.Option_D|safe }}</td>
                     <td>{{ x.Answer|safe }}</td>
+<<<<<<< HEAD
                     <td><a class="w3-button w3-red w3-hover-black" href="                       
                         /deleteques/?id{{x.Question|safe }}">Delete</a></td>
+=======
+                    <td><a class="w3-button w3-red w3-hover-black"href="/deleteques/?id={{ x.Question_ID|safe }}">Delete</a></td>
+>>>>>>> 3d262c9b7f0db7c1f558c7e001e0e0dabbc55675
                 </tr>
                 {% endfor %}
             </table>

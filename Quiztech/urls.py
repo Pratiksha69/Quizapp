@@ -47,5 +47,6 @@ urlpatterns = [
     path('savequiz/',savequiz),
     path('savequestion/',savequestion),
     path('deleteques/',deleteques),
+    path('candidatelist/',candidatelist),
 
 ]

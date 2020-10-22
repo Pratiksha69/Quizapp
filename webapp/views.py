@@ -241,3 +241,5 @@ def deleteques(request):
 	id_=request.GET.get('id')
 	QuestionData.objects.filter(Question_ID=id_).delete()
 	return redirect('/quizdash/')
+def candidatelist(request):
+	return render(request,'candidatelist.html',{})

@@ -206,10 +206,6 @@ def quizdash(request):
 		'data':QuizData.objects.filter(Quiz_ID=quizid)[0],
 		'questions':QuestionData.objects.filter(Quiz_ID=quizid)}
 	return render(request,'quizdash.html',dic)
-def candidatelist(request):
-	return render(request,'candidatelist.html',{})
-def result(request):
-	return render(request,'result.html',{})
 
 @csrf_exempt
 def savequestion(request):
@@ -240,12 +236,3 @@ def savequestion(request):
 		return redirect('/quizdash/?id='+request.session['quiz_id'])
 	else:
 		return HttpResponse('Error 404 Not Found')
-
-def deleteques(request):
-	id_=request.GET.get('id')
-	QuestionData.objects.filter(Question_ID=id_).delete()
-	return redirect('/quizdash/')
-def candidatelist(request):
-	return render(request,'candidatelist.html',{})
-def candidateregistration(request):
-	return render(request,'candidateregistration.html',{})

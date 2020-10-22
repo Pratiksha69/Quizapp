@@ -31,6 +31,8 @@ urlpatterns = [
     path('verified/',verified),
     path('OrgSave/',OrgSave),
     path('quizdash/',quizdash),
+    path('candidatelist/',candidatelist),
+    path('result/',result),
     path('organizerdashboard/',organizerdashboard),
 
     path('dashbord/',dashbord),
@@ -39,7 +41,7 @@ urlpatterns = [
     path('verifyuser/',verify_user),
     path('checklogin/',checklogin),
     path('candidatelogin/',candidatelogin),
-    
+    path('candidateregistration/',candidateregistration),
 
     path('resendotp/',resendotp),
     path('logout/',logout),

@@ -207,14 +207,9 @@ def quizdash(request):
 		'questions':QuestionData.objects.filter(Quiz_ID=quizid)}
 	return render(request,'quizdash.html',dic)
 def candidatelist(request):
-	quizid = request.GET.get('id')
-	request.session['quiz_id'] = quizid
-	dic={'checksession':checksession(request),
-		'data':QuizData.objects.filter(Quiz_ID=quizid)[0],
-		'questions':QuestionData.objects.filter(Quiz_ID=quizid)}
-	return render(request,'candidatelist.html',dic)
+	return render(request,'candidatelist.html',{})
 def result(request):
-	return render(request,'result.html',dic)
+	return render(request,'result.html',{})
 
 @csrf_exempt
 def savequestion(request):

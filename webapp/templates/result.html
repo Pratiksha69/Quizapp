@@ -118,27 +118,15 @@
         </section>
         <div style="width:100%;padding:50px;"class="w3-blue">
         	<div class="w3-bar">
-                <a class="w3-button w3-white w3-hover-black"href="">Candidate List</a>
-                <a class="w3-button w3-white w3-hover-black"href="">Deactive Quiz</a>
-                <a class="w3-button w3-white w3-hover-black"href="">Results</a>
+                <a class="w3-button w3-white w3-hover-black"href="/quizdash/?id={{ data.Quiz_ID|safe }}">Quiz Home</a>
+                <a class="w3-button w3-white w3-hover-black"href="/candidatelist/?id={{ data.Quiz_ID|safe }}">Candidate List</a>
+                <a class="w3-button w3-black w3-hover-black"href="/result/?id={{ data.Quiz_ID|safe }}">Results</a>
             </div>
-            <div style="padding:20px;margin:20px;"class="w3-container w3-white">
-                <h1> </h1>
-                <form action="/savequestion/" method="POST">
-                    <textarea class="w3-input" placeholder="Candidate Name" name="question"></textarea>
-                    <input style="margin-top:20px;"class="w3-input" type="text" placeholder="Result" name="a">
-                 
-                    
-                    
-                        
-                    
-                    <input style="width:100%;margin-top:20px;"class="w3-button w3-blue w3-hover-black"type="submit" value="Add">
-                </form>
-            </div>
-            <table class="w3-table-all">
-                <tr class="w3-red">
+            <table style="margin-top:20px;"class="w3-table-all">
+                <tr class="w3-black">
                     <th>Candidate Name</th>
                     <th>Result</th>
+                    <th>Action</th>
                 </tr>
                 {% for x in questions %}
                 <tr style="color:black;">
@@ -146,6 +134,7 @@
                     <td>{{ x.Result|safe }}</td>
                     <td><a class="w3-button w3-red w3-hover-black" href="                       
                         /deleteques/?id{{x.Candidate_Name|safe }}">Delete</a></td>
+                    <td><a class="w3-button w3-green w3-hover-black"href="">Send Result</a></td>
                 </tr>
                 {% endfor %}
             </table>

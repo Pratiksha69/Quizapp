@@ -41,7 +41,7 @@ urlpatterns = [
     path('verifyuser/',verify_user),
     path('checklogin/',checklogin),
     path('candidatelogin/',candidatelogin),
-    
+    path('candidateregistration/',candidateregistration),
 
     path('resendotp/',resendotp),
     path('logout/',logout),
@@ -49,5 +49,6 @@ urlpatterns = [
     path('savequiz/',savequiz),
     path('savequestion/',savequestion),
     path('deleteques/',deleteques),
+    path('candidatelist/',candidatelist),
 
 ]

@@ -118,10 +118,11 @@
         </section>
         <div style="width:100%;padding:50px;"class="w3-blue">
         	<div class="w3-bar">
-                <a class="w3-button w3-white w3-hover-black"href="">Candidate List</a>
-                <a class="w3-button w3-white w3-hover-black"href="">Deactive Quiz</a>
-                <a class="w3-button w3-white w3-hover-black"href="">Results</a>
+                <a class="w3-button w3-black w3-hover-black"href="/quizdash/?id={{ data.Quiz_ID|safe }}">Quiz Home</a>
+                <a class="w3-button w3-white w3-hover-black"href="/candidatelist/?id={{ data.Quiz_ID|safe }}">Candidate List</a>
+                <a class="w3-button w3-white w3-hover-black"href="/result/?id={{ data.Quiz_ID|safe }}">Results</a>
             </div>
+            <div class="w3-red" style="padding:10px;">Quiz Registration Link : /candidateregistration/?id={{ data.Quiz_ID|safe }}</div>
             <div style="padding:20px;margin:20px;"class="w3-container w3-white">
                 <h1>Add Questions Here</h1>
                 <form action="/savequestion/" method="POST">

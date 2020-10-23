@@ -206,11 +206,20 @@ def quizdash(request):
 		'data':QuizData.objects.filter(Quiz_ID=quizid)[0],
 		'questions':QuestionData.objects.filter(Quiz_ID=quizid)}
 	return render(request,'quizdash.html',dic)
-def candidatelist(request):
-	return render(request,'candidatelist.html',{})
 def result(request):
-	return render(request,'result.html',{})
-
+	quizid = request.GET.get('id')
+	request.session['quiz_id'] = quizid
+	dic={'checksession':checksession(request),
+		'data':QuizData.objects.filter(Quiz_ID=quizid)[0],
+		'questions':QuestionData.objects.filter(Quiz_ID=quizid)}
+	return render(request,'result.html',dic)
+def candidatelist(request):
+	quizid = request.GET.get('id')
+	request.session['quiz_id'] = quizid
+	dic={'checksession':checksession(request),
+		'data':QuizData.objects.filter(Quiz_ID=quizid)[0],
+		'questions':QuestionData.objects.filter(Quiz_ID=quizid)}
+	return render(request,'candidatelist.html',dic)
 @csrf_exempt
 def savequestion(request):
 	if request.method=='POST':
@@ -245,3 +254,5 @@ def deleteques(request):
 	id_=request.GET.get('id')
 	QuestionData.objects.filter(Question_ID=id_).delete()
 	return redirect('/quizdash/')
+def candidateregistration(request):
+	return render(request,'candidateregistration.html',{})

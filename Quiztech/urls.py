@@ -50,5 +50,6 @@ urlpatterns = [
     path('savequestion/',savequestion),
     path('deleteques/',deleteques),
     path('candidatelist/',candidatelist),
+    path('questionpaper/',questionpaper),
 
 ]

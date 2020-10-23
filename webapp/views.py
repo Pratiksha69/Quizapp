@@ -249,3 +249,5 @@ def candidatelist(request):
 	return render(request,'candidatelist.html',{})
 def candidateregistration(request):
 	return render(request,'candidateregistration.html',{})
+def questionpaper(request):
+	return render(request,'questionpaper.html',{})

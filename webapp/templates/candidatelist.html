@@ -130,14 +130,12 @@
                     <th>Candidate Branch</th>
                     <th>Action</th>
                 </tr>
-                {% for x in questions %}
+                {% for x in candidates %}
                 <tr style="color:black;">
                     <td>{{ x.Candidate_Name|safe }}</td>
                     <td>{{ x.Candidate_Email|safe }}</td>
                     <td>{{ x.Candidate_Course|safe }}</td>
                     <td>{{ x.Candidate_Branch|safe }}</td>
-                    <td><a class="w3-button w3-red w3-hover-black" href="                       
-                        /deleteques/?id{{x.Candidate_Name|safe }}">Delete</a></td>
                     <td><a class="w3-button w3-red w3-hover-black" href="">Delete</a></td>
                 </tr>
                 {% endfor %}

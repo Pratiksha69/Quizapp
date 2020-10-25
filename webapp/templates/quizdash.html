@@ -121,10 +121,12 @@
                 <a class="w3-button w3-black w3-hover-black"href="/quizdash/?id={{ data.Quiz_ID|safe }}">Quiz Home</a>
                 <a class="w3-button w3-white w3-hover-black"href="/candidatelist/?id={{ data.Quiz_ID|safe }}">Candidate List</a>
                 <a class="w3-button w3-white w3-hover-black"href="/result/?id={{ data.Quiz_ID|safe }}">Results</a>
+                <a class="w3-button w3-white w3-hover-black"href="/candidateregistration/?id={{ data.Quiz_ID|safe }}">Quiz Registration Link</a>
+                <a class="w3-button w3-red w3-hover-black" style="font-weight:bold;">Quiz Password : {{ data.Quiz_Password|safe }}</a>
             </div>
-            <div class="w3-red" style="padding:10px;">Quiz Registration Link : /candidateregistration/?id={{ data.Quiz_ID|safe }}</div>
             <div style="padding:20px;margin:20px;"class="w3-container w3-white">
                 <h1>Add Questions Here</h1>
+                <h2 class="w3-red" style="width:250px;padding:5px;text-align:center;border-radius:10px;">{{ msg|safe }}</h2>
                 <form action="/savequestion/" method="POST">
                     <textarea class="w3-input" placeholder="Enter Question Here" name="question"></textarea>
                     <input style="margin-top:20px;"class="w3-input" type="text" placeholder="Option A" name="a">
@@ -159,12 +161,7 @@
                     <td>{{ x.Option_C|safe }}</td>
                     <td>{{ x.Option_D|safe }}</td>
                     <td>{{ x.Answer|safe }}</td>
-<<<<<<< HEAD
-                    <td><a class="w3-button w3-red w3-hover-black" href="                       
-                        /deleteques/?id{{x.Question|safe }}">Delete</a></td>
-=======
                     <td><a class="w3-button w3-red w3-hover-black"href="/deleteques/?id={{ x.Question_ID|safe }}">Delete</a></td>
->>>>>>> 3d262c9b7f0db7c1f558c7e001e0e0dabbc55675
                 </tr>
                 {% endfor %}
             </table>

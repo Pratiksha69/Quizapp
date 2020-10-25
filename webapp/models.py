@@ -15,6 +15,7 @@ class OrganizerData(models.Model):
 class QuizData(models.Model):
 	Quiz_ID=models.CharField(max_length=20, primary_key=True)
 	Org_ID=models.CharField(max_length=20)
+	Quiz_Password=models.CharField(max_length=20, default='None')
 	Quiz_Name=models.CharField(max_length=100)
 	Quiz_Category=models.CharField(max_length=50)
 	Question_Count=models.CharField(max_length=5)
@@ -35,3 +36,14 @@ class QuestionData(models.Model):
 	Answer=models.CharField(max_length=100)
 	class Meta:
 		db_table="QuestionData"
+
+class CandidateData(models.Model):
+	Candidate_ID=models.CharField(max_length=20, primary_key=True)
+	Quiz_ID=models.CharField(max_length=20)
+	Candidate_Name=models.CharField(max_length=100)
+	Candidate_Email=models.CharField(max_length=100)
+	Candidate_Course=models.CharField(max_length=100)
+	Candidate_Branch=models.CharField(max_length=100)
+	Status=models.CharField(max_length=100, default='Active')
+	class Meta:
+		db_table="CandidateData"

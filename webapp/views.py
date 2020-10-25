@@ -177,10 +177,14 @@ def savequiz(request):
 			x=x+1 #2
 			qid=q+str(x)
 		x=int(x)
+		quiz_password=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+qid+request.session['org_id'])
+		quiz_password=str(quiz_password)
+		quiz_password=quiz_password.upper()[0:8]
 		if not QuizData.objects.filter(Quiz_Name=name).exists():
 			QuizData(
 				Quiz_ID=qid,
 				Org_ID=request.session['org_id'],
+				Quiz_Password=quiz_password,
 				Quiz_Name=name,
 				Quiz_Category=category,
 				Question_Count=quesno,
@@ -218,8 +222,11 @@ def candidatelist(request):
 	request.session['quiz_id'] = quizid
 	dic={'checksession':checksession(request),
 		'data':QuizData.objects.filter(Quiz_ID=quizid)[0],
-		'questions':QuestionData.objects.filter(Quiz_ID=quizid)}
+		'candidates':CandidateData.objects.filter(Quiz_ID=quizid)}
 	return render(request,'candidatelist.html',dic)
+def candidateregistration(request):
+	dic={'data':QuizData.objects.filter(Quiz_ID=request.GET.get('id'))[0]}
+	return render(request,'candidateregistration.html',dic)
 @csrf_exempt
 def savequestion(request):
 	if request.method=='POST':
@@ -236,23 +243,63 @@ def savequestion(request):
 			x=x+1 #2
 			qid=q+str(x)
 		x=int(x)
-		QuestionData(
-			Question_ID=qid,
-			Quiz_ID=request.session['quiz_id'],
-			Question=ques,
-			Option_A=option_a,
-			Option_B=option_b,
-			Option_C=option_c,
-			Option_D=option_d,
-			Answer=answer
-			).save()
-		return redirect('/quizdash/?id='+request.session['quiz_id'])
+		if len(QuestionData.objects.filter(Quiz_ID=request.session['quiz_id'])) < int(QuizData.objects.filter(Quiz_ID=request.session['quiz_id'])[0].Question_Count): 
+			QuestionData(
+				Question_ID=qid,
+				Quiz_ID=request.session['quiz_id'],
+				Question=ques,
+				Option_A=option_a,
+				Option_B=option_b,
+				Option_C=option_c,
+				Option_D=option_d,
+				Answer=answer
+				).save()
+			return redirect('/quizdash/?id='+request.session['quiz_id'])
+		else:
+			dic={'checksession':checksession(request),
+				'data':QuizData.objects.filter(Quiz_ID=request.session['quiz_id'])[0],
+				'questions':QuestionData.objects.filter(Quiz_ID=request.session['quiz_id']),
+				'msg':'Question Limit Exceeds!'}
+			return render(request,'quizdash.html',dic)
 	else:
 		return HttpResponse('Error 404 Not Found')
-
 def deleteques(request):
 	id_=request.GET.get('id')
 	QuestionData.objects.filter(Question_ID=id_).delete()
-	return redirect('/quizdash/')
-def candidateregistration(request):
-	return render(request,'candidateregistration.html',{})
+	return redirect('/quizdash/?id='+request.session['quiz_id'])
+@csrf_exempt
+def savecandidate(request):
+	if request.method=='POST':
+		name = request.POST.get('name')
+		email = request.POST.get('email')
+		course = request.POST.get('course')
+		branch = request.POST.get('branch')
+		quizid = request.POST.get('quizid')
+		if not CandidateData.objects.filter(Candidate_Email=email, Quiz_ID=quizid).exists():
+			q="CAN00"
+			x=1
+			qid=q+str(x)
+			while CandidateData.objects.filter(Candidate_ID=qid).exists():
+				x=x+1 #2
+				qid=q+str(x)
+			x=int(x)
+			CandidateData(
+				Candidate_ID=qid,
+				Quiz_ID=quizid,
+				Candidate_Name=name,
+				Candidate_Email=email,
+				Candidate_Course=course,
+				Candidate_Branch=branch
+				).save()
+			dic={'msg':'You have successfully registered!',
+				'data':QuizData.objects.filter(Quiz_ID=quizid)[0]}
+			return render(request,'candidateregistration.html',dic)
+		else:
+			dic={'msg':'You have already registered for this quiz!',
+				'data':QuizData.objects.filter(Quiz_ID=quizid)[0]}
+			return render(request,'candidateregistration.html',dic)
+	else:
+		return HttpResponse('Error 404 Not Found')
+
+def questionpaper(request):
+	return render(request,'questionpaper.html',{})

@@ -303,3 +303,5 @@ def savecandidate(request):
 
 def questionpaper(request):
 	return render(request,'questionpaper.html',{})
+def candidateresult(request):
+	return render(request,'candidateresult.html',{})

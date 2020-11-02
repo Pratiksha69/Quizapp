@@ -52,5 +52,6 @@ urlpatterns = [
     path('candidatelist/',candidatelist),
     path('questionpaper/',questionpaper),
     path('savecandidate/',savecandidate),
+    path('candidateresult/',candidateresult),
 
 ]

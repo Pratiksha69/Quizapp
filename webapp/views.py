@@ -24,10 +24,6 @@ def quizregistration(request):
 def candidatelogin(request):
 	return render(request,'candidatelogin.html',{})
 
-	dic={'checksession':checksession(request)}
-	return render(request, 'register.html',dic)
-
-
 @csrf_exempt
 def OrgSave(request):
 	if request.method=='POST':
@@ -300,6 +296,32 @@ def savecandidate(request):
 			return render(request,'candidateregistration.html',dic)
 	else:
 		return HttpResponse('Error 404 Not Found')
-
+@csrf_exempt
+def candidatecheck(request):
+	if request.method=='POST':
+		email = request.POST.get('email')
+		password = request.POST.get('password')
+		quiz = QuizData.objects.filter(Quiz_Password=password).exists()
+		candidate = CandidateData.objects.filter(Candidate_Email=email).exists()
+		if quiz and candidate:
+			quizid=QuizData.objects.filter(Quiz_Password=password)[0].Quiz_ID
+			request.session['quizid'] = quizid
+			request.session['canid'] = CandidateData.objects.filter(Candidate_Email=email)[0].Candidate_ID
+			questions=QuestionData.objects.filter(Quiz_ID=quizid)
+			return render(request,'questionpaper.html',{'data':questions})
+		else:
+			return render(request,'candidatelogin.html',{'msg':'Incorrect Credentials'})
+	else:
+		return HttpResponse('Error 404 Not Found')
+@csrf_exempt
+def calculate_result(request):
+	quizid = request.session['quizid']
+	canid = request.session['canid']
+	mark_per_ques = int(QuizData.objects.filter(Quiz_ID=quizid)[0].Marks_Per_Ques)
+	obtained_marks = 0
+	for x in QuestionData.objects.filter(Quiz_ID=quizid):
+		if request.POST.get(x.Question_ID) == x.Answer:
+			obtained_marks = obtained_marks + mark_per_ques
+	return render
 def questionpaper(request):
 	return render(request,'questionpaper.html',{})

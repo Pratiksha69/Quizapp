@@ -139,30 +139,36 @@
          }
     </style>
     <div style="padding:50px;">
-        <div style="font-size:20px;padding:20px;border-radius:20px;"class="w3-black"><span style="font-weight:bold;">Q1. </span>My name is sonali kulshrestha. I am from tundla.But I live in Agra And I have completed my b.tech. My father name is sanjeev kulshreshtha and my mother name is vandana kulshreshtha.</div>
+        <form>
+        {% for x in data %}
+        <div style="font-size:20px;padding:20px;border-radius:20px;"class="w3-black"><span style="font-weight:bold;">Q. </span>{{ x.Question|safe }}</div>
         <div style="padding:20px;">
-            <form>
+                
                 <label style="width:100%;">
-                <input style="position:absolute;opacity:0;cursor:pointer;"type="radio" id="optionA">
-                <p style="width:100%;border-left:10px solid black;border-radius:10px;padding:10px;">A) ABGHTYHJUG</p>
+                <input style="position:absolute;opacity:0;cursor:pointer;"type="radio" id="optionA" name="{{ x.Question_ID|safe }}" value="A">
+                <p style="width:100%;border-left:10px solid black;border-radius:10px;padding:10px;">A) {{ x.Option_A|safe }}</p>
                 </label><br>
+                
                 <label style="width:100%;">
-                <input style="position:absolute;opacity:0;cursor:pointer;"type="radio" id="optionA">
-                <p style="width:100%;border-left:10px solid black;border-radius:10px;padding:10px;">B) ABGHTYHJUG</p>
+                <input style="position:absolute;opacity:0;cursor:pointer;"type="radio" id="optionA" name="{{ x.Question_ID|safe }}" value="B">
+                <p style="width:100%;border-left:10px solid black;border-radius:10px;padding:10px;">B) {{ x.Option_B|safe }}</p>
                 </label><br>
+                
                 <label style="width:100%;">
-                <input style="position:absolute;opacity:0;cursor:pointer;"type="radio" id="optionA">
-                <p style="width:100%;border-left:10px solid black;border-radius:10px;padding:10px;">C) ABGHTYHJUG</p>
+                <input style="position:absolute;opacity:0;cursor:pointer;"type="radio" id="optionA" name="{{ x.Question_ID|safe }}" value="C">
+                <p style="width:100%;border-left:10px solid black;border-radius:10px;padding:10px;">C) {{ x.Option_C|safe }}</p>
                 </label><br>
+                
                 <label style="width:100%;">
-                <input style="position:absolute;opacity:0;cursor:pointer;"type="radio" id="optionA">
-                <p style="width:100%;border-left:10px solid black;border-radius:10px;padding:10px;">D) ABGHTYHJUG</p>
+                <input style="position:absolute;opacity:0;cursor:pointer;"type="radio" id="optionA" name="{{ x.Question_ID|safe }}" value="D">
+                <p style="width:100%;border-left:10px solid black;border-radius:10px;padding:10px;">D) {{ x.Option_D|safe }}</p>
                 </label>
-            </form>
+            
         </div>
+        {% endfor %}
         <div class="w3-bar">
-        <button class="w3-button w3-blue w3-hover-black">Submit Quiz</button>
-    </div>
+        <button type="submit" style="width:100%;" class="w3-button w3-blue w3-hover-black">Submit Quiz</button>
+        </form>
     </div>
 
 </main>

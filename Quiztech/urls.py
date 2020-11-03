@@ -27,7 +27,6 @@ urlpatterns = [
     path('checklogin/',checklogin),
     path('candidatelogin/',candidatelogin),
     path('candidateregistration/',candidateregistration),
-
     path('resendotp/',resendotp),
     path('logout/',logout),
     path('createquiz/',createquiz),
@@ -35,9 +34,9 @@ urlpatterns = [
     path('savequestion/',savequestion),
     path('deleteques/',deleteques),
     path('candidatelist/',candidatelist),
-    path('questionpaper/',questionpaper),
     path('savecandidate/',savecandidate),
     path('savecandidate/',savecandidate),
     path('candidatecheck/',candidatecheck),
+    path('calculate_result/',calculate_result),
 
 ]

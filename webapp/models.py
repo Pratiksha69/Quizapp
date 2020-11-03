@@ -47,3 +47,10 @@ class CandidateData(models.Model):
 	Status=models.CharField(max_length=100, default='Active')
 	class Meta:
 		db_table="CandidateData"
+
+class ResultData(models.Model):
+	Candidate_ID=models.CharField(max_length=20)
+	Quiz_ID=models.CharField(max_length=20)
+	Result=models.CharField(max_length=10)
+	class Meta:
+		db_table="ResultData"

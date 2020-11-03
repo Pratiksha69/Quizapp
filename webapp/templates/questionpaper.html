@@ -96,10 +96,6 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        <li class="button-header margin-left "><a href="#" class="btn">Submit Quiz</a></li>
-                                        <li class="button-header"><a href="/logout/" class="btn btn3">Leave</a></li>
-                                        
-                                    
                                     </ul>
                                 </nav>
                             </div>
@@ -139,7 +135,8 @@
          }
     </style>
     <div style="padding:50px;">
-        <form>
+        <h1>Quiz will end in {{ quiztime|safe }} minutes.</h1>
+        <form action="/calculate_result/" method="POST" id="quizform">
         {% for x in data %}
         <div style="font-size:20px;padding:20px;border-radius:20px;"class="w3-black"><span style="font-weight:bold;">Q. </span>{{ x.Question|safe }}</div>
         <div style="padding:20px;">
@@ -218,8 +215,9 @@
 
 <script type="text/javascript">
     setTimeout(function() {
-        window.close();
-    }, 1000);
+        alert('Oho! Time Up');
+        document.getElementById('quizform').submit();
+    }, {{ time|safe }});
 </script>
 </body>
 </html>

@@ -211,7 +211,7 @@ def result(request):
 	request.session['quiz_id'] = quizid
 	dic={'checksession':checksession(request),
 		'data':QuizData.objects.filter(Quiz_ID=quizid)[0],
-		'questions':QuestionData.objects.filter(Quiz_ID=quizid)}
+		'results':ResultData.objects.filter(Quiz_ID=quizid)}
 	return render(request,'result.html',dic)
 def candidatelist(request):
 	quizid = request.GET.get('id')
@@ -303,14 +303,17 @@ def candidatecheck(request):
 		password = request.POST.get('password')
 		quiz = QuizData.objects.filter(Quiz_Password=password).exists()
 		candidate = CandidateData.objects.filter(Candidate_Email=email).exists()
-		if quiz and candidate:
+		status=ResultData.objects.filter(Candidate_ID=CandidateData.objects.filter(Candidate_Email=email)[0].Candidate_ID).exists()
+		if quiz and candidate and status==False:
 			quizid=QuizData.objects.filter(Quiz_Password=password)[0].Quiz_ID
+			quiztime=QuizData.objects.filter(Quiz_Password=password)[0].Maximum_Time
+			time=int(quiztime)*60*1000
 			request.session['quizid'] = quizid
 			request.session['canid'] = CandidateData.objects.filter(Candidate_Email=email)[0].Candidate_ID
 			questions=QuestionData.objects.filter(Quiz_ID=quizid)
-			return render(request,'questionpaper.html',{'data':questions})
+			return render(request,'questionpaper.html',{'data':questions,'time':time,'quiztime':quiztime})
 		else:
-			return render(request,'candidatelogin.html',{'msg':'Incorrect Credentials'})
+			return render(request,'candidatelogin.html',{'msg':'Incorrect Credentials or You have already Participated'})
 	else:
 		return HttpResponse('Error 404 Not Found')
 @csrf_exempt
@@ -319,9 +322,19 @@ def calculate_result(request):
 	canid = request.session['canid']
 	mark_per_ques = int(QuizData.objects.filter(Quiz_ID=quizid)[0].Marks_Per_Ques)
 	obtained_marks = 0
+	max_marks = int(QuizData.objects.filter(Quiz_ID=quizid)[0].Marks_Per_Ques) * int(QuizData.objects.filter(Quiz_ID=quizid)[0].Question_Count)
 	for x in QuestionData.objects.filter(Quiz_ID=quizid):
 		if request.POST.get(x.Question_ID) == x.Answer:
-			obtained_marks = obtained_marks + mark_per_ques
-	return render
-def questionpaper(request):
-	return render(request,'questionpaper.html',{})
+			obtained_marks=obtained_marks+mark_per_ques
+			continue
+		else:
+			continue
+	ResultData(
+		Candidate_ID=canid,
+		Quiz_ID=quizid,
+		Result=str(obtained_marks)
+	).save()
+	dic={'candata':CandidateData.objects.filter(Candidate_ID=canid)[0],
+		'marks':obtained_marks,
+		'maxmarks':max_marks}
+	return render(request,'candidateresult.html',dic)

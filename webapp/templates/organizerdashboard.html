@@ -120,7 +120,6 @@
         <div style="width:100%;padding:50px;"class="w3-black">
         	<table class="w3-table-all">
         		<tr class="w3-red">
-        			<th>Publish Action</th>
         			<th>Quiz Name</th>
                     <th>Category</th>
         			<th>No. of Questions</th>
@@ -130,11 +129,6 @@
         		</tr>
                 {% for x in data %}
         		<tr style="color:black;">
-                    {% if x.Status == 'Deactive' %}
-        			<td><a class="w3-button w3-green w3-hover-black"href="">Publish</a></td>
-                    {% else %}
-                    <td><a class="w3-button w3-red w3-hover-black"href="">Un-Publish</a></td>
-                    {% endif %}
         			<td>{{ x.Quiz_Name|safe }}</td>
         			<td>{{ x.Quiz_Category|safe }}</td>
         			<td>{{ x.Question_Count|safe }} Questions</td>

@@ -124,17 +124,13 @@
             </div>
             <table style="margin-top:20px;"class="w3-table-all">
                 <tr class="w3-black">
-                    <th>Candidate Name</th>
+                    <th>Candidate ID</th>
                     <th>Result</th>
-                    <th>Action</th>
                 </tr>
-                {% for x in questions %}
+                {% for x in results %}
                 <tr style="color:black;">
-                    <td>{{ x.Candidate_Name|safe }}</td>
+                    <td>{{ x.Candidate_ID|safe }}</td>
                     <td>{{ x.Result|safe }}</td>
-                    <td><a class="w3-button w3-red w3-hover-black" href="                       
-                        /deleteques/?id{{x.Candidate_Name|safe }}">Delete</a></td>
-                    <td><a class="w3-button w3-green w3-hover-black"href="">Send Result</a></td>
                 </tr>
                 {% endfor %}
             </table>

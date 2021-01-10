@@ -5,6 +5,7 @@ from webapp.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/',index),
+    path('',index),
     path('register/',register),
     path('login/',login),
     path('courses/',courses),

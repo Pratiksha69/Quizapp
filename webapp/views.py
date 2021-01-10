@@ -9,7 +9,6 @@ from webapp.myutil import *
 # Create your views here.
 def index(request):
 	dic={'checksession':checksession(request)}
-	print(dic)
 	return render(request, 'index.html',dic)
 def verified(request):
 	return render(request, 'verified.html',{})
